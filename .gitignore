@@ -1,0 +1,6 @@
+.*
+!.*ignore
+!.editorconfig
+
+.*/
+node_modules/
