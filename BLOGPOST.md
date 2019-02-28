@@ -18,10 +18,15 @@ Working with a grid system like this isn't all scotches and skittles, there are 
 
 ## Background Breakouts
 
-A common web site design feature is the have backgrounds that stretch out all the way the left and right edges of the viewport. This doesn't really seem to jive with the grid you've layed out in a container which is a fixed width, and is usually not meant to reach the far edges of the viewport.
+A common web site design feature is the have backgrounds that stretch out all the way the left and right edges of the viewport while the main elements of your site remain constrained inside the grid. This is called a "breakout background".
 
 TODO: Show figure that has full width breakout backgrounds, and outline of fixed width grid container.
 
+The naive solution to this is to create a full width div, give it a background styling, then put a grid container inside that div. Rinse and repeat this process every time there's a new breakout background style. This is bad for at least two reasons. One, you're complicating the stucture of html to accommodate styling. We shouldn't let mere colors and pictures dictate how we structure our html! Two, the wierd html structure can have a negative impact on how you develop your site. Typically we don't just develop sites from top to bottom but from the outside in for best reusability. Having to go back to the top of the dom tree to add new elements for a breakout background will make for some awkward coding. Finally, you may run into complexities as now you have multiple grid containers, they will still line up because they share the same widths and margins but that alignment becomes brittle as your CSS grows and site matures.
+
+Our goal is that we want to have a single grid container for the whole site and still have these breakout backgrounds. We can achieve this purely in CSS without messing with out html strucure.
+
+The trick is that we're we use a pseudo element at the row we want to have a breakout background from and assign the background styling to it. Then we stretch that pseudo element out to the edges of the viewport.
 
 
 ## Nested Grids vs. Designers
