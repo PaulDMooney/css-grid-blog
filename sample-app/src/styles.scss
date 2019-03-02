@@ -13,7 +13,7 @@
       &:before {
         content: '#{$breakpoint} #{$container-max-width}';
         position: absolute;
-        top: 0;
+        bottom: 0;
         left: 0;
         z-index: 1;
         opacity: 0.5;
@@ -56,5 +56,15 @@
   color: white;
   &:before {
     background: darkblue;
+  }
+}
+
+.show-container {
+  &.container {
+    outline: 2px solid darkmagenta;
+  }
+
+  & .breakout-background {
+    z-index: unset;
   }
 }
