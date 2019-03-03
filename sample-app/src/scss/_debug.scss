@@ -14,25 +14,25 @@
   }
 }
 
-.grid-display.row {
+.main-grid-overlay.row {
   display: none;
 }
 
 .show-grid.container {
   position: relative;
-  .grid-display.row {
+  .main-grid-overlay.row {
     display: flex;
     position: absolute;
     height: 100%;
     width: 100%;
+  }
 
-    .col-sm-1 .content {
-      height: 100%;
-      background-color: aqua;
-      border-left: 1px solid black;
-      border-right: 1px solid black;
-      opacity: 0.1;
-    }
+  .row .content {
+    height: 100%;
+    background-color: aqua;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    opacity: 0.1;
   }
 }
 
