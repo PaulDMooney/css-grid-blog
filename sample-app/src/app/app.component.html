@@ -1,10 +1,9 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div class="container report-breakpoint show-container">
+<div class="container report-breakpoint" [ngClass]="{'show-container':showGrid}">
 
   <div class="row grid-display">
     <div class="col-sm-1" *ngFor="let num of [1,2,3,4,5,6,7,8,9,10,11,12]">
-      <div class="outter-content">
-        <div class="inner-content"></div>
+      <div class="content">
       </div>
     </div>
   </div>

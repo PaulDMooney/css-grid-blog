@@ -8,41 +8,37 @@
         left: 0;
         z-index: 1;
         opacity: 0.5;
+        background: white;
       }
     }
   }
+}
+
+.grid-display.row {
+  display: none;
 }
 
 .show-container {
   &.container {
     outline: 2px solid darkmagenta;
+    position: relative;
+    .grid-display.row {
+      display: flex;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+
+      .col-sm-1 .content {
+        height: 100%;
+        background-color: aqua;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+        opacity: 0.1;
+      }
+    }
   }
 
   & .breakout-background {
     z-index: unset;
-  }
-}
-
-.grid-display.row {
-  z-index: 2;
-  .col-sm-1 {
-    .outter-content{
-      position: absolute;
-      height: 100vh;
-      background-color: aqua;
-      border-left: 1px solid black;
-      border-right: 1px solid black;
-      opacity: 0.1;
-      z-index: 1;
-      left:0;
-      padding:inherit;
-      // position: absolute;
-      width: 100%;
-      .inner-content {
-        background-color: red;
-        height: 100%;
-        width: 100%;
-      }
-    }
   }
 }
