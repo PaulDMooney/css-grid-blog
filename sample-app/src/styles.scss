@@ -8,20 +8,3 @@
 @import './scss/breakoutbackground';
 @import './scss/debug';
 
-
-
-.header {
-  height: 5rem;
-  color: white;
-  &:before {
-    background: darkslateblue;
-  }
-}
-
-.footer {
-  height: 5rem;
-  color: white;
-  &:before {
-    background: darkblue;
-  }
-}

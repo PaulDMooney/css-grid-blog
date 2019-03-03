@@ -1,0 +1,20 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+
+.demo-background {
+  color: $white;
+
+  &:before {
+    background-image: url('https://images.pexels.com/photos/1936936/pexels-photo-1936936.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=200&w=480');
+    background-size: cover;
+  }
+}
+
+.row {
+  min-height: 15rem;
+}
+
+.col {
+  display: flex;
+  align-items: center;
+}

@@ -18,24 +18,27 @@
   display: none;
 }
 
+.show-grid.container {
+  position: relative;
+  .grid-display.row {
+    display: flex;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+
+    .col-sm-1 .content {
+      height: 100%;
+      background-color: aqua;
+      border-left: 1px solid black;
+      border-right: 1px solid black;
+      opacity: 0.1;
+    }
+  }
+}
+
 .show-container {
   &.container {
     outline: 2px solid darkmagenta;
-    position: relative;
-    .grid-display.row {
-      display: flex;
-      position: absolute;
-      height: 100%;
-      width: 100%;
-
-      .col-sm-1 .content {
-        height: 100%;
-        background-color: aqua;
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-        opacity: 0.1;
-      }
-    }
   }
 
   & .breakout-background {

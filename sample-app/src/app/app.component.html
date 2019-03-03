@@ -1,5 +1,5 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div class="container report-breakpoint" [ngClass]="{'show-container':showGrid}">
+<div class="container report-breakpoint" [ngClass]="{'show-container':showContainer, 'show-grid': showGrid}">
 
   <div class="row grid-display">
     <div class="col-sm-1" *ngFor="let num of [1,2,3,4,5,6,7,8,9,10,11,12]">
@@ -9,12 +9,20 @@
   </div>
 
   <div class="row breakout-background header">
-    <div class="col-sm-12"><h1>Header!</h1></div>
+    <div class="col-sm-12">
+      <div class="header-content">
+        <h1>Header</h1>
+      </div>
+    </div>
   </div>
 
 <router-outlet></router-outlet>
 
   <div class="row breakout-background footer">
-    <div class="col-sm-12"><h2>Footer!</h2></div>
+    <div class="col-sm-12">
+      <div class="footer-content">
+        <h2>Footer</h2>
+      </div>
+    </div>
   </div>
 </div>

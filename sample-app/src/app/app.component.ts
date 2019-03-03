@@ -10,12 +10,15 @@ export class AppComponent implements OnInit{
 
   showGrid = false;
 
+  showContainer = false;
+
   constructor(private route:ActivatedRoute) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       console.log(params);
       this.showGrid = params['grid'] === "true";
+      this.showContainer = params['container'] === "true";
     });
   }
 
