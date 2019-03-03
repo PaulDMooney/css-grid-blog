@@ -5,43 +5,10 @@
 @import '~bootstrap/scss/bootstrap-grid';
 
 @import '~bootstrap/scss/mixins';
+@import './scss/breakoutbackground';
+@import './scss/debug';
 
 
-.report-breakpoint {
-  @each $breakpoint, $container-max-width in $container-max-widths {
-    @include media-breakpoint-up($breakpoint, $grid-breakpoints) {
-      &:before {
-        content: '#{$breakpoint} #{$container-max-width}';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        z-index: 1;
-        opacity: 0.5;
-      }
-    }
-  }
-}
-
-.breakout-background {
-  position: relative;
-  z-index: 0;
-
-  &:before {
-    content:'';
-    position: absolute;
-    height: 100%;
-    z-index: -1;
-    top:0;
-    width: 100vw;
-
-    // Different width for each breakpoint
-    @each $breakpoint, $container-max-width in $container-max-widths {
-      @include media-breakpoint-up($breakpoint, $grid-breakpoints) {
-        left: calc(-100vw / 2 + #{$container-max-width} / 2)
-      }
-    }
-  }
-}
 
 .header {
   height: 5rem;
@@ -56,15 +23,5 @@
   color: white;
   &:before {
     background: darkblue;
-  }
-}
-
-.show-container {
-  &.container {
-    outline: 2px solid darkmagenta;
-  }
-
-  & .breakout-background {
-    z-index: unset;
   }
 }

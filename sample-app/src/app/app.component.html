@@ -1,13 +1,21 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div class="container report-breakpoint show-container">
 
+  <div class="row grid-display">
+    <div class="col-sm-1" *ngFor="let num of [1,2,3,4,5,6,7,8,9,10,11,12]">
+      <div class="outter-content">
+        <div class="inner-content"></div>
+      </div>
+    </div>
+  </div>
+
   <div class="row breakout-background header">
-    <h1>Header!</h1>
+    <div class="col-sm-12"><h1>Header!</h1></div>
   </div>
 
 <router-outlet></router-outlet>
 
   <div class="row breakout-background footer">
-    <h2>Footer!</h2>
+    <div class="col-sm-12"><h2>Footer!</h2></div>
   </div>
 </div>
