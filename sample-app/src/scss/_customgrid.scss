@@ -1,0 +1,23 @@
+@import '~bootstrap/scss/bootstrap-grid';
+
+@import '~bootstrap/scss/mixins';
+@import '~bootstrap/scss/variables';
+
+
+@mixin make-custom-grid-columns($columns) {
+  $breakpointsCustomColumns: (
+    xs-#{$columns}: map-get($grid-breakpoints, xs),
+    sm-#{$columns}: map-get($grid-breakpoints, sm),
+    md-#{$columns}: map-get($grid-breakpoints, md),
+    lg-#{$columns}: map-get($grid-breakpoints, lg),
+    xl-#{$columns}: map-get($grid-breakpoints, xl),
+  );
+
+  @include make-grid-columns($columns: $columns, $breakpoints: $breakpointsCustomColumns )
+}
+
+$customColumnCounts: 5,7,8,9,10,11;
+
+@each $customColumn in $customColumnCounts {
+  @include make-custom-grid-columns($customColumn);
+}
