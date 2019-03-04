@@ -1,0 +1,25 @@
+.main-area {
+  position: relative;
+  &:before {
+    content:'Main Area';
+    position: absolute;
+  }
+}
+
+:host-context(.show-container) .main-area {
+  outline: 2px dashed red;
+  outline-offset: -2px;
+}
+
+.sidebar-area {
+  position: relative;
+  &:before {
+    content: 'Sidebar Area';
+    position: absolute;
+  }
+}
+
+:host-context(.show-container) .sidebar-area {
+  outline: 2px dashed blue;
+  outline-offset: -2px;
+}
