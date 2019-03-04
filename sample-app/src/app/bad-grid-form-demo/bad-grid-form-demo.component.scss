@@ -1,0 +1,31 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+
+.main-area {
+  margin-top: 2rem;
+}
+.button-cell {
+  display:flex;
+  flex-direction: row;
+  align-items: flex-end;
+  button {
+    width: 100%;
+  }
+}
+
+.sidebar-component {
+  background-color: $purple;
+  width: 100%;
+  height: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.sidebar-content {
+  color: $white;
+  text-align: center;
+  // display:flex;
+  // align-items: center
+}
