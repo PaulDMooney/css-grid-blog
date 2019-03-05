@@ -10,7 +10,9 @@ A very common implementation is the 12 column grid which is generally used to he
 1. A row, which lays out grid cells, and is responsible for wrapping the cells when they don't fit.
 1. A cell, which takes up space in a row. Most of the time cells take up some multiple of one 12th of the width of the grid which is how we get the 12 column effect. 
 
-TODO: Insert figure that highlights grid container, grid rows, grid cells, and overlays columns.
+
+<!-- Take screenshots at 1120 x 480  -->
+![The magenta outline shows the borders of the grid container. The translucent bars represent the columns that cells will align to in the grid.](./figures/grid_container_overlays.png)
 
 This is seen in some form or another popular CSS framework such as [Bootstrap](https://getbootstrap.com/docs/4.0/layout/grid/) and the [Foundation XY Grid](https://foundation.zurb.com/sites/docs/xy-grid.html), but can also be implemented as in the native CSS-grid if your browser supports it. All of these systems are capable of creating other kinds of layouts beyond the 12 column grid, but it is still a popular choice to use them for this purpose.
 
