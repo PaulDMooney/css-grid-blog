@@ -30,7 +30,7 @@ The naive solution to this is to create a full width div, give it a background s
 
 Our goal is that we want to have a single grid container for the whole site and still have these breakout backgrounds. We can achieve this purely in CSS without messing with our html strucure.
 
-The trick is that we're we use a pseudo element at the row we want to have a breakout background from and assign the background styling to it. Then we stretch that pseudo element out to the edges of the viewport. 
+The trick is that we use a pseudo element at the row we want to have a breakout background from and assign the background styling to it. Then we stretch that pseudo element out to the edges of the viewport. 
 
 First we start with a class that has a pseudo element positioned behind its content on the Z-axis:
 ```sass
