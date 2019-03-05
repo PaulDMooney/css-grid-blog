@@ -12,7 +12,7 @@ A very common implementation is the 12 column grid which is generally used to he
 
 
 <!-- Take screenshots at 1120 x 480  -->
-![The magenta outline shows the borders of the grid container. The translucent bars represent the columns that cells will align to in the grid.](./figures/grid_container_overlays.png)
+![Grid container overlay figure](./figures/grid_container_overlays.png)*The magenta outline shows the borders of the grid container. The translucent bars represent the columns that cells will align to in the grid.*
 
 This is seen in some form or another popular CSS framework such as [Bootstrap](https://getbootstrap.com/docs/4.0/layout/grid/) and the [Foundation XY Grid](https://foundation.zurb.com/sites/docs/xy-grid.html), but can also be implemented as in the native CSS-grid if your browser supports it. All of these systems are capable of creating other kinds of layouts beyond the 12 column grid, but it is still a popular choice to use them for this purpose.
 
