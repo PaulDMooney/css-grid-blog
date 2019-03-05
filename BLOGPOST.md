@@ -34,7 +34,7 @@ The trick is that we're we use a pseudo element at the row we want to have a bre
 
 First we start with a class that has a pseudo element positioned behind its content on the Z-axis:
 ```sass
-// Apply this class to elemnents which should have breakout backgrounds
+// Apply this class to elements which should have breakout backgrounds
 .breakout-background {
   position: relative;
   z-index: 0; // establish stacking context for breakout
