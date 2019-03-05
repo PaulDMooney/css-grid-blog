@@ -70,7 +70,7 @@ Our final output looks like this:
 @import '~bootstrap/scss/bootstrap-grid';
 @import '~bootstrap/scss/mixins';
 
-// Apply this class to elemnents which should have breakout backgrounds
+// Apply this class to elements which should have breakout backgrounds
 .breakout-background {
   position: relative; // establish breakout positioning ancestor
   z-index: 0; // establish stacking context for breakout
