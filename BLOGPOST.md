@@ -18,6 +18,8 @@ This is seen in some form or another popular CSS framework such as [Bootstrap](h
 
 Working with a grid system like this isn't all scotches and skittles, there are some things that are untuitive or require some workarounds. Here are some of my tips for working with grids.
 
+*This post is going to focus on implementing tips in Bootstrap with [Sass](https://sass-lang.com/), though these concepts can apply to other systems.*
+
 ## Background Breakouts
 
 A common web site design feature is the have backgrounds that stretch out all the way the left and right edges of the viewport while the main elements of your site remain constrained inside the grid. This is called a "breakout background".
@@ -28,7 +30,40 @@ The naive solution to this is to create a full width div, give it a background s
 
 Our goal is that we want to have a single grid container for the whole site and still have these breakout backgrounds. We can achieve this purely in CSS without messing with out html strucure.
 
-The trick is that we're we use a pseudo element at the row we want to have a breakout background from and assign the background styling to it. Then we stretch that pseudo element out to the edges of the viewport.
+The trick is that we're we use a pseudo element at the row we want to have a breakout background from and assign the background styling to it. Then we stretch that pseudo element out to the edges of the viewport. 
+
+First we start with a class that has a pseudo element positioned behind its content on the Z-axis:
+```sass
+// Apply this class to elemnents which should have breakout backgrounds
+.breakout-background {
+  position: relative;
+  z-index: 0; // establish stacking context for breakout
+
+  // Breakout background pseudo element
+  &:before {
+    content:'';
+    position: absolute;
+    height: 100%;
+    z-index: -1; // pseudo element is behind content
+    top:0;
+    width: 100vw; // Takes up 100% of the viewport width
+    background-color: blue;
+  }
+```
+The tricky part is positioning the element horizontally. We want it to be moved left half the viewport width, but then since it's starting it's move from the left side of the grid container we have to take the size of the grid container into consideration. So after it's moved left half the viewport width it needs to move right again by half the grid container width:
+```sass
+    left: calc(-100vw / 2 + #{$container-max-width} / 2);
+```
+Now we have to figure out what the grid container width is. In Bootstrap there's a different width for every breakpoint, so we'll need out left positioning to be different for every breakpoint as well. We can accomplish this by looping over the available breakpoints Bootstrap provides:
+```sass
+@each $breakpoint, $container-max-width in $container-max-widths {
+  @include media-breakpoint-up($breakpoint, $grid-breakpoints) {
+    left: calc(-100vw / 2 + #{$container-max-width} / 2)
+  }
+}
+```
+
+Our final output looks like this:
 
 ```sass
 @import '~bootstrap/scss/variables';
@@ -45,9 +80,10 @@ The trick is that we're we use a pseudo element at the row we want to have a bre
     content:'';
     position: absolute;
     height: 100%;
-    z-index: -1;
+    z-index: -1; // pseudo element is behind content
     top:0;
     width: 100vw; // Takes up 100% of the viewport width
+    background-color: blue;
 
     // Different left position for each breakpoint
     @each $breakpoint, $container-max-width in $container-max-widths {
@@ -61,6 +97,22 @@ The trick is that we're we use a pseudo element at the row we want to have a bre
 }
 ```
 
+Now we can add leverage this class whereever we need a background breakout:
+```html
+<div class="row breakout-background different-background">
+  <div class="col">
+    <h1>Here's a breakout background</h1>
+  </div>
+</div>
+```
+
+And even override the background style using Sass inheritance or by adding a simple modifier class:
+```sass
+.different-background:before {
+  background-image: url('./myImage.png');
+  background-size: cover;
+}
+```
 
 ## Nested Grids vs. Designers
 

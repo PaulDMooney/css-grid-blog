@@ -1,8 +1,5 @@
 @import '~bootstrap/scss/variables';
-@import '~bootstrap/scss/bootstrap-grid';
-
 @import '~bootstrap/scss/mixins';
-
 
 // Apply this class to elemnents which should have breakout backgrounds
 .breakout-background {
@@ -14,7 +11,7 @@
     content:'';
     position: absolute;
     height: 100%;
-    z-index: -1;
+    z-index: -1; // pseudo element is behind content
     top:0;
     width: 100vw; // Takes up 100% of the viewport width
 
