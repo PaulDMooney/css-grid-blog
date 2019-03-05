@@ -5,6 +5,7 @@ import { BadGridDemoComponent } from './bad-grid-demo/bad-grid-demo.component';
 import { GoodGridDemoComponent } from './good-grid-demo/good-grid-demo.component';
 import { BadGridFormDemoComponent } from './bad-grid-form-demo/bad-grid-form-demo.component';
 import { GoodGridFormDemoComponent } from './good-grid-form-demo/good-grid-form-demo.component';
+import { RowsAndCellsComponent } from './rows-and-cells/rows-and-cells.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
   {
     path: 'goodgridform',
     component: GoodGridFormDemoComponent
+  },
+  {
+    path: 'rowsandcells',
+    component: RowsAndCellsComponent
   }
 ];
 

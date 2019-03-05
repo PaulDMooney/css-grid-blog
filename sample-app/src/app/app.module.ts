@@ -9,6 +9,7 @@ import { GoodGridDemoComponent } from './good-grid-demo/good-grid-demo.component
 import { SidebarTemplateComponent } from './sidebar-template/sidebar-template.component';
 import { BadGridFormDemoComponent } from './bad-grid-form-demo/bad-grid-form-demo.component';
 import { GoodGridFormDemoComponent } from './good-grid-form-demo/good-grid-form-demo.component';
+import { RowsAndCellsComponent } from './rows-and-cells/rows-and-cells.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { GoodGridFormDemoComponent } from './good-grid-form-demo/good-grid-form-
     GoodGridDemoComponent,
     SidebarTemplateComponent,
     BadGridFormDemoComponent,
-    GoodGridFormDemoComponent
+    GoodGridFormDemoComponent,
+    RowsAndCellsComponent
   ],
   imports: [
     BrowserModule,

@@ -22,13 +22,44 @@ Working with a grid system like this isn't all scotches and skittles, there are 
 
 A common web site design feature is the have backgrounds that stretch out all the way the left and right edges of the viewport while the main elements of your site remain constrained inside the grid. This is called a "breakout background".
 
-TODO: Show figure that has full width breakout backgrounds, and outline of fixed width grid container.
+![Breakout background design](./figures/breakoutbackground_container.png)*In this design, several sections of the page have backgrounds that breakout beyond the grid container (outlined in magenta)*
 
-The naive solution to this is to create a full width div, give it a background styling, then put a grid container inside that div. Rinse and repeat this process every time there's a new breakout background style. This is bad for at least two reasons. One, you're complicating the stucture of html to accommodate styling. We shouldn't let mere colors and pictures dictate how we structure our html! Two, the wierd html structure can have a negative impact on how you develop your site. Typically we don't just develop sites from top to bottom but from the outside in for best reusability. Having to go back to the top of the dom tree to add new elements for a breakout background will make for some awkward coding. Finally, you may run into complexities as now you have multiple grid containers, they will still line up because they share the same widths and margins but that alignment becomes brittle as your CSS grows and site matures.
+The naive solution to this is to create a full width div, give it a background styling, then put a grid container inside that div. Rinse and repeat this process for every section that requires a breakout background. This could work, but it's ugly. The structure of the html has been compromised to support styling.
 
 Our goal is that we want to have a single grid container for the whole site and still have these breakout backgrounds. We can achieve this purely in CSS without messing with out html strucure.
 
 The trick is that we're we use a pseudo element at the row we want to have a breakout background from and assign the background styling to it. Then we stretch that pseudo element out to the edges of the viewport.
+
+```sass
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/bootstrap-grid';
+@import '~bootstrap/scss/mixins';
+
+// Apply this class to elemnents which should have breakout backgrounds
+.breakout-background {
+  position: relative; // establish breakout positioning ancestor
+  z-index: 0; // establish stacking context for breakout
+
+  // Breakout background pseudo element
+  &:before {
+    content:'';
+    position: absolute;
+    height: 100%;
+    z-index: -1;
+    top:0;
+    width: 100vw; // Takes up 100% of the viewport width
+
+    // Different left position for each breakpoint
+    @each $breakpoint, $container-max-width in $container-max-widths {
+      @include media-breakpoint-up($breakpoint, $grid-breakpoints) {
+
+        // Position -50% of viewport width, then readjust right again half the grid container width
+        left: calc(-100vw / 2 + #{$container-max-width} / 2)
+      }
+    }
+  }
+}
+```
 
 
 ## Nested Grids vs. Designers

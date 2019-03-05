@@ -1,0 +1,15 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+
+.row {
+  background-color: rgba($orange, 0.5);
+  outline: 1px solid $black;
+  // outline-offset: -2px;
+}
+
+.cell {
+  height: 3rem;
+  background-color: rgba($orange, 0.5);
+  outline: 2px dotted $orange;
+  outline-offset: -2px;
+}
