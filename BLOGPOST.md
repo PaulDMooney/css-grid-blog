@@ -97,7 +97,7 @@ Our final output looks like this:
 }
 ```
 
-Now we can add leverage this class whereever we need a background breakout:
+Now we can add this class wherever we need a background breakout:
 ```html
 <div class="row breakout-background different-background">
   <div class="col">
@@ -106,7 +106,7 @@ Now we can add leverage this class whereever we need a background breakout:
 </div>
 ```
 
-And even override the background style using Sass inheritance or by adding a simple modifier class:
+And even override the background style either using Sass inheritance or by adding a simple modifier class:
 ```sass
 .different-background:before {
   background-image: url('./myImage.png');
