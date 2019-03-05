@@ -54,7 +54,7 @@ The tricky part is positioning the element horizontally. We want it to be moved 
 ```sass
     left: calc(-100vw / 2 + #{$container-max-width} / 2);
 ```
-Now we have to figure out what the grid container width is. In Bootstrap there's a different width for every breakpoint, so we'll need out left positioning to be different for every breakpoint as well. We can accomplish this by looping over the available breakpoints Bootstrap provides:
+Now we have to figure out what the grid container width is. In Bootstrap there's a different width for every breakpoint, so we'll need our left positioning to be different for every breakpoint as well. We can accomplish this by looping over the available breakpoints Bootstrap provides:
 ```sass
 @each $breakpoint, $container-max-width in $container-max-widths {
   @include media-breakpoint-up($breakpoint, $grid-breakpoints) {
