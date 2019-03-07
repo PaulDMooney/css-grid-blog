@@ -14,25 +14,25 @@ A very common implementation is the 12 column grid which is generally used to he
 <!-- Take screenshots at 1120 x 480  -->
 ![Grid container overlay figure](./figures/grid_container_overlays.png)*The magenta outline shows the borders of the grid container. The translucent bars represent the columns that cells will align to in the grid.*
 
-This is seen in some form or another popular CSS framework such as [Bootstrap](https://getbootstrap.com/docs/4.0/layout/grid/) and the [Foundation XY Grid](https://foundation.zurb.com/sites/docs/xy-grid.html), but can also be implemented as in the native CSS-grid if your browser supports it. All of these systems are capable of creating other kinds of layouts beyond the 12 column grid, but it is still a popular choice to use them for this purpose.
+This is seen in some form or another in popular CSS framework such as [Bootstrap](https://getbootstrap.com/docs/4.0/layout/grid/) or [Foundation XY Grid](https://foundation.zurb.com/sites/docs/xy-grid.html), but can also be implemented in the native CSS-grid if your browser supports it. All of these systems are capable of creating other kinds of layouts beyond the 12 column grid, but it is still a popular choice to use them for this purpose.
 
-Working with a grid system like this isn't all scotches and skittles, there are some things that are untuitive or require some workarounds. Here are some of my tips for working with grids.
+Working with a grid system like this isn't all scotches and skittles, there are some things that are untuitive or require some workarounds. Here are some tips for working with grids.
 
 *This post is going to focus on implementing tips in Bootstrap with [Sass](https://sass-lang.com/), though these concepts can apply to other systems.*
 
-## Background Breakouts
+## Breakout Backgrounds
 
-A common web site design feature is the have backgrounds that stretch out all the way the left and right edges of the viewport while the main elements of your site remain constrained inside the grid. This is called a "breakout background".
+A common web site design feature is the have backgrounds that stretch out all the way the left and right edges of the viewport while the main elements of your site remain constrained inside the grid. We'll refer to this as a  "breakout background".
 
 ![Breakout background design](./figures/breakoutbackground_container.png)*In this design, several sections of the page have backgrounds that breakout beyond the grid container (outlined in magenta)*
 
-The naive solution to this is to create a full width div, give it a background styling, then put a grid container inside that div. Rinse and repeat this process for every section that requires a breakout background. This could work, but it's ugly. The structure of the html has been compromised to support styling.
+The naive solution to this is to create a full width div, give it a background styling, then put a grid container inside that div. Rinse and repeat this process for every section that requires a breakout background. This could work, but it's ugly. The structure of the html has been compromised to support styling, and it probably puts some tough limitations on how you code your site.
 
 Our goal is that we want to have a single grid container for the whole site and still have these breakout backgrounds. We can achieve this purely in CSS without messing with our html strucure.
 
-The trick is that we use a pseudo element at the row we want to have a breakout background from and assign the background styling to it. Then we stretch that pseudo element out to the edges of the viewport. 
+The trick is that we use a pseudo element on the element we want to have a breakout background on and then assign some background styling to it. Then we stretch that pseudo element out to the edges of the viewport.
 
-First we start with a class that has a pseudo element positioned behind its content on the Z-axis:
+First we start with a class that has a pseudo element positioned behind the content of its parent on the Z-axis:
 ```sass
 // Apply this class to elements which should have breakout backgrounds
 .breakout-background {
@@ -43,14 +43,14 @@ First we start with a class that has a pseudo element positioned behind its cont
   &:before {
     content:'';
     position: absolute;
-    height: 100%;
-    z-index: -1; // pseudo element is behind content
     top:0;
+    height: 100%;
     width: 100vw; // Takes up 100% of the viewport width
+    z-index: -1; // pseudo element is behind its parent
     background-color: blue;
   }
 ```
-The tricky part is positioning the element horizontally. We want it to be moved left half the viewport width, but then since it's starting it's move from the left side of the grid container we have to take the size of the grid container into consideration. So after it's moved left half the viewport width it needs to move right again by half the grid container width:
+The tricky part is positioning the element horizontally so that its `left` value is the far left side of the viewport. We want it to be moved left half the viewport width, but then since it's starting it's move from the left side of the grid container we have to take the size of the grid container into consideration. So after it's moved left half the viewport width it needs to move right again by half the grid container width:
 ```sass
     left: calc(-100vw / 2 + #{$container-max-width} / 2);
 ```
@@ -80,9 +80,9 @@ Our final output looks like this:
     content:'';
     position: absolute;
     height: 100%;
-    z-index: -1; // pseudo element is behind content
     top:0;
     width: 100vw; // Takes up 100% of the viewport width
+    z-index: -1; // pseudo element is behind its parent
     background-color: blue;
 
     // Different left position for each breakpoint
