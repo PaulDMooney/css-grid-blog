@@ -115,11 +115,11 @@ And even override the background style either using Sass inheritance or by addin
 ```
 
 ## Nested Grids vs. Designers
-It's typical that when a designer creates the mockups for a page that not only do they adhere to the grid for the most general layout but that a good number of elements throughout the mockup align to the columns of the grid as well. This can be good because it cuts down on the extra work of creating custom widths for various elements, those elements can squeeze down in size along with the grid, and maybe it's more visually appealing as well.
+It's typical that when a designer creates the mockups for a page that not only do they adhere to an overall 12 column grid for the most general layout but that a good number of elements throughout the mockup align to the columns of that grid as well. This can be good because it cuts down on the extra work of creating custom widths for various elements, those elements can squeeze down in size in a consistent way with the rest of the grid, and maybe it's more visually appealing as well.
 
 The problem is that those pesky designers don't have a clue how you need to structure your page (nor should they!). You're building your page in boxes that nest into eachother not line by line, which leads us to the problem of nested grids.
 
-Nested grids are exactly what they sound like. A grid nested down somewhere deeper into an existing grid. 
+Nested grids are exactly what they sound like. A grid nested down somewhere deeper into the cell of an existing grid.
 
 Let's take this example to illustrate the problem:
 
@@ -127,14 +127,14 @@ A designer creates a mockup like this
 ![Designer mockup of form](./figures/goodgridform.png)
 *This designer is a charity case. His name is Paul*
 
-This is the same design with a grid overlay to show the alignment of components to grid columns and separation of main area and sidebar.
+This is the same design with the designer's grid overlay to show the alignment of components to grid columns and separation of main area and sidebar.
 ![Designer mockup of form with grid overlay](./figures/goodgridform_container_grid.png)
 
 The problem comes when it's time to implement this we might end up with something that looks like this:
 ![Bad implementation of form with grid overlay](./figures/badgridform_container_grid.png)
 *Grid overlay added to illustrate misalignment of elements*
 
-What's happened is we've started a nested the grid in the main area. Now there's no longer a set of CSS classes to help us size our elements properly. A column in a grid takes up 1/12th (or %8.3) of its parent. In this case we have a parent (the main area) that's already 10/12ths (or 83%) of the overall grid container. Nesting a grid inside of that gives us columns that are about 6.9% of the overall grid container. They will never align.
+What has happened is we've started a nested the grid in the main area, which itself is confined to a cell within a grid. Now there's no longer a set of CSS classes to help us size our elements properly. A column in a grid takes up 1/12th (or %8.3) of its parent. In this case we have a parent (the main area) that's already 10/12ths (or 83%) of the overall grid. Nesting a grid inside of that gives us columns that are about 6.9% of the overall grid container. They will never align to the designer's grid (ie, the overall grid).
 
 ![Bad grid overlay](./figures/badgrid_container_grid.png)
 *The red bars show the columns in the nested grid. Where they overlap with the overall grid columns it's grey. Since they don't line up there's not a perfect overlap.*
@@ -181,6 +181,57 @@ $customColumnCounts: 5,7,8,9,10,11;
   @include make-custom-grid-columns($customColumn);
 }
 ```
-That's it! We now have other sized grid columns we can use to align sub grid columns to the overall grid. `col-sm5-1`, `col-sm5-2`, `col-md7-5`, etc. You may have noticed we skipped creating columns for grids that are 2, 3, 4, and 6 wide. That's because they all divide evenly into 12, so the default 12 column grid can be used on those situations.
+That's it! We now have other sized grid columns we can use to align sub grid columns to the overall grid the designer is aligning elements to. `col-sm5-1`, `col-sm5-2`, `col-md7-5`, etc. You may have noticed we skipped creating columns for grids that are 2, 3, 4, and 6 wide. That's because they all divide evenly into 12, so the default 12 column grid can be used on those situations.
 
 ## Grids are for Parents. Not for Kids
+This tip is more of a general guideline or a best practice for working with any kind of grid system and a component based application framework such as Angular, React, Vue, or Web Components. The tip is this: A component should not know about the grid it is being layed out into.
+
+The reasons why are reusability, and just generally knowing where to draw the line between your parent component and your child component.
+
+So what am I talking about? Well using the 12 column grid as an example, a parent component is probably setting a layout using rows. That much makes sense. But it should also fall on the responsibility of the parent to layout the cells. The child component should not have any styling on it that says "I take up 3 columns of ... something".
+
+Here's a brief example of the bad practice:
+```html
+
+<!-- the Parent component -->
+<div>
+  <h1>I'm the parent!</h1>
+  <div class="row">
+    <app-mychild></app-mychild>
+  </div>
+</div>
+
+<!-- The child component 'app-mychild'. Assumes it needs to take up 6 columns -->
+<div class="col-md-6 child-style">
+  <h2>I'm the child!</h2>
+  <!--  some other important child component stuff here-->
+  ...
+</div>
+```
+
+Here's an example of the good practice:
+```html
+
+<!-- the Parent component. Decides how much space to give the child. -->
+<div>
+  <h1>I'm the parent!</h1>
+  <div class="row">
+    <div class="col-md-6">
+      <app-mychild></app-mychild>
+    </div>
+  </div>
+</div>
+
+<!-- The child component 'app-mychild' -->
+<div class="child-style">
+  <h2>I'm the child!</h2>
+  <!--  some other important child component stuff here-->
+  ...
+</div>
+```
+
+In the good example above, the child is not coupled to any specific grid layout. It can be reused in other places where it may need to take up more space, or less space. From a layout perspective, the child component's responsibility is to either take up 100% of the space given to it by it's parent, or only as much as it needs depending on scenario.
+
+There may be some exceptions to the rule, like if the child component only ever exists with that parent component and is never reused anywhere else, but often its probably still a good idea to follow this rule just so we know where to draw the line on layout responsibility.
+
+This rule doesn't mean a child component can't have a grid layout of it's own, to layout its own children, that's perfectly fine as long as that grid exists entirely within the child component doesn't bleed into its own children.
