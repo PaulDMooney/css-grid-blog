@@ -14,7 +14,7 @@ A very common implementation is the 12 column grid which is generally used to he
 <!-- Take screenshots at 1120 x 480  -->
 ![Grid container overlay figure](./figures/grid_container_overlays.png)*The magenta outline shows the borders of the grid container. The translucent bars represent the columns that cells will align to in the grid.*
 
-This is seen in some form or another in popular CSS framework such as [Bootstrap](https://getbootstrap.com/docs/4.0/layout/grid/) or [Foundation XY Grid](https://foundation.zurb.com/sites/docs/xy-grid.html), but can also be implemented in the native CSS-grid if your browser supports it. All of these systems are capable of creating other kinds of layouts beyond the 12 column grid, but it is still a popular choice to use them for this purpose.
+This is seen in some form or another in popular CSS frameworks such as [Bootstrap](https://getbootstrap.com/docs/4.0/layout/grid/) or [Foundation XY Grid](https://foundation.zurb.com/sites/docs/xy-grid.html), but can also be implemented in the native CSS-grid if your browser supports it. All of these systems are capable of creating other kinds of layouts beyond the 12 column grid, but it is still a popular choice to use them for this purpose.
 
 Working with a grid system like this isn't all scotches and skittles, there are some things that are untuitive or require some workarounds. Here are some tips for working with grids.
 
@@ -24,7 +24,7 @@ Working with a grid system like this isn't all scotches and skittles, there are 
 
 A common web site design feature is the have backgrounds that stretch out all the way the left and right edges of the viewport while the main elements of your site remain constrained inside the grid. We'll refer to this as a  "breakout background".
 
-![Breakout background design](./figures/breakoutbackground_container.png)*In this design, several sections of the page have backgrounds that breakout beyond the grid container (outlined in magenta)*
+![Breakout background design](./figures/breakoutbackground_container.png)*In this design, several sections of the page have backgrounds that break out beyond the grid container (outlined in magenta)*
 
 The naive solution to this is to create a full width div, give it a background styling, then put a grid container inside that div. Rinse and repeat this process for every section that requires a breakout background. This could work, but it's ugly. The structure of the html has been compromised to support styling, and it probably puts some tough limitations on how you code your site.
 
@@ -115,22 +115,23 @@ And even override the background style either using Sass inheritance or by addin
 ```
 
 ## Nested Grids vs. Designers
+<!-- wordy sentence below -->
 It's typical that when a designer creates the mockups for a page that not only do they adhere to an overall 12 column grid for the most general layout but that a good number of elements throughout the mockup align to the columns of that grid as well. This can be good because it cuts down on the extra work of creating custom widths for various elements, those elements can squeeze down in size in a consistent way with the rest of the grid, and maybe it's more visually appealing as well.
 
-The problem is that those pesky designers don't have a clue how you need to structure your page (nor should they!). You're building your page in boxes that nest into eachother not line by line, which leads us to the problem of nested grids.
+The problem is that those pesky designers don't have a clue how you need to structure your page (nor should they!). You're building your page in boxes that nest into each other, not line by line, which leads us to the problem of nested grids.
 
 Nested grids are exactly what they sound like. A grid nested down somewhere deeper into the cell of an existing grid.
 
-Let's take this example to illustrate the problem:
+Let's take this example to illustrate the problem.
 
-A designer creates a mockup like this
+A designer creates a mockup like this:
 ![Designer mockup of form](./figures/goodgridform.png)
-*This designer is a charity case. His name is Paul*
+*This designer is a charity case. His name is Paul.*
 
 This is the same design with the designer's grid overlay to show the alignment of components to grid columns and separation of main area and sidebar.
 ![Designer mockup of form with grid overlay](./figures/goodgridform_container_grid.png)
 
-The problem comes when it's time to implement this we might end up with something that looks like this:
+The problem is that when it's time to implement the design, we might end up with something that looks like this: 
 ![Bad implementation of form with grid overlay](./figures/badgridform_container_grid.png)
 *Grid overlay added to illustrate misalignment of elements*
 
@@ -139,7 +140,7 @@ What has happened is we've started a nested the grid in the main area, which its
 ![Bad grid overlay](./figures/badgrid_container_grid.png)
 *The red bars show the columns in the nested grid. Where they overlap with the overall grid columns it's grey. Since they don't line up there's not a perfect overlap.*
 
-We need a new set of Bootstrap's `col-*` classes here for a nested grid that is 10/12ths of the overall grid. Luckily Boostrap has some Sass mixins to make this easy. It comes with a mixin called `make-grid-columns` which takes as arguments the number of columns wide you want your grid to be, and then a map of "infix" names to breakpoints. Using the existing `$grid-breakpoints` value from Bootstrap we can create our ten column grid like so:
+We need a new set of Bootstrap's `col-*` classes here for a nested grid that is 10/12ths of the overall grid. Luckily Boostrap has some Sass mixins to make this easy. It comes with a mixin called `make-grid-columns` which takes as arguments the number of columns wide you want your grid to be, and then a map of "infix" names to breakpoints. Using the existing `$grid-breakpoints` map from Bootstrap's variables we can create our ten column grid like so:
 
 ```sass
 @import '~bootstrap/scss/bootstrap-grid';
@@ -234,4 +235,4 @@ In the good example above, the child is not coupled to any specific grid layout.
 
 There may be some exceptions to the rule, like if the child component only ever exists with that parent component and is never reused anywhere else, but often its probably still a good idea to follow this rule just so we know where to draw the line on layout responsibility.
 
-This rule doesn't mean a child component can't have a grid layout of it's own, to layout its own children, that's perfectly fine as long as that grid exists entirely within the child component doesn't bleed into its own children.
+This rule doesn't mean a child component can't have a grid layout of it's own, to layout its own children. That's perfectly fine as long as the grid existing entirely within the child component doesn't bleed into its own children.
