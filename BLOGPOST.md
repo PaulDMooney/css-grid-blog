@@ -16,7 +16,7 @@ A very common implementation is the 12 column grid which is generally used to he
 
 This is seen in some form or another in popular CSS frameworks such as [Bootstrap](https://getbootstrap.com/docs/4.0/layout/grid/) or [Foundation XY Grid](https://foundation.zurb.com/sites/docs/xy-grid.html), but can also be implemented in the native CSS-grid if your browser supports it. All of these systems are capable of creating other kinds of layouts beyond the 12 column grid, but it is still a popular choice to use them for this purpose.
 
-Working with a grid system like this isn't all scotches and skittles, there are some things that are untuitive or require some workarounds. Here are some tips for working with grids.
+Working with a grid system like this isn't all scotches and skittles, there are some things that are unintuitive or require some workarounds. Here are some tips for working with grids.
 
 *This post is going to focus on implementing tips in Bootstrap with [Sass](https://sass-lang.com/), though these concepts can apply to other systems.*
 
@@ -28,9 +28,9 @@ A common web site design feature is the have backgrounds that stretch out all th
 
 The naive solution to this is to create a full width div, give it a background styling, then put a grid container inside that div. Rinse and repeat this process for every section that requires a breakout background. This could work, but it's ugly. The structure of the html has been compromised to support styling, and it probably puts some tough limitations on how you code your site.
 
-Our goal is that we want to have a single grid container for the whole site and still have these breakout backgrounds. We can achieve this purely in CSS without messing with our html strucure.
+Our goal is that we want to have a single grid container for the whole site and still have these breakout backgrounds. We can achieve this purely in CSS without messing with our html structure.
 
-The trick is that we use a pseudo element on the element we want to have a breakout background on and then assign some background styling to it. Then we stretch that pseudo element out to the edges of the viewport.
+The trick is that we use a pseudo element on the element we want to have a breakout background for and then assign some background styling to it. Then we stretch that pseudo element out to the edges of the viewport.
 
 First we start with a class that has a pseudo element positioned behind the content of its parent on the Z-axis:
 ```sass
@@ -140,7 +140,7 @@ What has happened is we've started a nested the grid in the main area, which its
 ![Bad grid overlay](./figures/badgrid_container_grid.png)
 *The red bars show the columns in the nested grid. Where they overlap with the overall grid columns it's grey. Since they don't line up there's not a perfect overlap.*
 
-We need a new set of Bootstrap's `col-*` classes here for a nested grid that is 10/12ths of the overall grid. Luckily Boostrap has some Sass mixins to make this easy. It comes with a mixin called `make-grid-columns` which takes as arguments the number of columns wide you want your grid to be, and then a map of "infix" names to breakpoints. Using the existing `$grid-breakpoints` map from Bootstrap's variables we can create our ten column grid like so:
+We need a new set of Bootstrap's `col-*` classes here for a nested grid that is 10/12ths of the overall grid. Luckily Bootstrap has some Sass mixins to make this easy. It comes with a mixin called `make-grid-columns` which takes as arguments the number of columns wide you want your grid to be, and then a map of "infix" names to breakpoints. Using the existing `$grid-breakpoints` map from Bootstrap's variables we can create our ten column grid like so:
 
 ```sass
 @import '~bootstrap/scss/bootstrap-grid';
@@ -159,7 +159,7 @@ $breakpointsCustomColumns: (
 ```
 This will produce classes `col-xs10-1`, `col-xs10-2`, up to `col-xs10-10` for the `xs` breakpoint. Likewise for `col-sm10-1`, `col-md10-1`, `col-md10-2`, etc. for the remaining breakpoints. The keys from the breakpoints map were used as the "infix" value between the word `col-` and the column number at the end: `col-${infix}-${columnwidth}`. We can now create a grid at 1/10th widths. Using these new classes in a nested grid gives us perfect alignment with the overall grid.
 ![Good grid overlay](./figures/goodgrid_container_grid.png)
-*Notice how the two grids column's perflectly overlap blue and red creating the grey bars.*
+*Notice how the two grids column's perfectly overlap blue and red creating the grey bars.*
 
 Now we can take this one step further and create other col-* classes for other nested grid widths:
 
@@ -185,7 +185,7 @@ $customColumnCounts: 5,7,8,9,10,11;
 That's it! We now have other sized grid columns we can use to align sub grid columns to the overall grid the designer is aligning elements to. `col-sm5-1`, `col-sm5-2`, `col-md7-5`, etc. You may have noticed we skipped creating columns for grids that are 2, 3, 4, and 6 wide. That's because they all divide evenly into 12, so the default 12 column grid can be used on those situations.
 
 ## Grids are for Parents. Not for Kids
-This tip is more of a general guideline or a best practice for working with any kind of grid system and a component based application framework such as Angular, React, Vue, or Web Components. The tip is this: A component should not know about the grid it is being layed out into.
+This tip is more of a general guideline or a best practice for working with any kind of grid system and a component based application framework such as Angular, React, Vue, or Web Components. The tip is this: A component should not know about the grid it is being laid out into.
 
 The reasons why are reusability, and just generally knowing where to draw the line between your parent component and your child component.
 
@@ -231,7 +231,7 @@ Here's an example of the good practice:
 </div>
 ```
 
-In the good example above, the child is not coupled to any specific grid layout. It can be reused in other places where it may need to take up more space, or less space. From a layout perspective, the child component's responsibility is to either take up 100% of the space given to it by it's parent, or only as much as it needs depending on scenario.
+In the good example above, the child is not coupled to any specific grid layout. It can be reused in other places where it may need to take up more space, or less space. From a layout perspective, the child component's responsibility is to either take up 100% of the space given to it by it's parent, or only as much as it needs to display its content depending on scenario.
 
 There may be some exceptions to the rule, like if the child component only ever exists with that parent component and is never reused anywhere else, but often its probably still a good idea to follow this rule just so we know where to draw the line on layout responsibility.
 
