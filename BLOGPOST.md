@@ -22,7 +22,7 @@ Working with a grid system like this isn't all scotches and skittles, there are 
 
 ## Breakout Backgrounds
 
-A common web site design feature is the have backgrounds that stretch out all the way the left and right edges of the viewport while the main elements of your site remain constrained inside the grid. We'll refer to this as a  "breakout background".
+A common web site design feature is the have backgrounds that stretch out all the way to the left and right edges of the viewport while the main elements of your site remain constrained inside the grid. We'll refer to this as a  "breakout background".
 
 ![Breakout background design](./figures/breakoutbackground_container.png)*In this design, several sections of the page have backgrounds that break out beyond the grid container (outlined in magenta)*
 
