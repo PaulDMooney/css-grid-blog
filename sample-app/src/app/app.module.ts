@@ -10,6 +10,7 @@ import { SidebarTemplateComponent } from './sidebar-template/sidebar-template.co
 import { BadGridFormDemoComponent } from './bad-grid-form-demo/bad-grid-form-demo.component';
 import { GoodGridFormDemoComponent } from './good-grid-form-demo/good-grid-form-demo.component';
 import { RowsAndCellsComponent } from './rows-and-cells/rows-and-cells.component';
+import { SVGIconsShowcaseComponent } from './svg-icons-showcase/svg-icons-showcase.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { RowsAndCellsComponent } from './rows-and-cells/rows-and-cells.component
     SidebarTemplateComponent,
     BadGridFormDemoComponent,
     GoodGridFormDemoComponent,
-    RowsAndCellsComponent
+    RowsAndCellsComponent,
+    SVGIconsShowcaseComponent
   ],
   imports: [
     BrowserModule,

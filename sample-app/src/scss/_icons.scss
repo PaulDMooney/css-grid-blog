@@ -1,0 +1,13 @@
+
+@mixin createIconStyle($path-to-svg, $icon-size) {
+  background-image: url('~/../src/#{$path-to-svg}');
+  background-repeat: no-repeat;
+  background-size: $icon-size auto;
+  background-position: center;
+  height: $icon-size;
+  width: $icon-size;
+}
+
+.download-icon {
+  @include createIconStyle('/assets/baseline-get_app-24px.svg', 2rem)
+}

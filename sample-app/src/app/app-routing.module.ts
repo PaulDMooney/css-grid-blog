@@ -6,6 +6,7 @@ import { GoodGridDemoComponent } from './good-grid-demo/good-grid-demo.component
 import { BadGridFormDemoComponent } from './bad-grid-form-demo/bad-grid-form-demo.component';
 import { GoodGridFormDemoComponent } from './good-grid-form-demo/good-grid-form-demo.component';
 import { RowsAndCellsComponent } from './rows-and-cells/rows-and-cells.component';
+import { SVGIconsShowcaseComponent } from './svg-icons-showcase/svg-icons-showcase.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
   {
     path: 'rowsandcells',
     component: RowsAndCellsComponent
+  },
+  {
+    path: 'icons',
+    component: SVGIconsShowcaseComponent
   }
 ];
 
