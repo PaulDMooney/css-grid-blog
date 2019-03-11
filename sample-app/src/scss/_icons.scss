@@ -8,6 +8,20 @@
   width: $icon-size;
 }
 
+// Using technique from https://codepen.io/noahblon/post/coloring-svgs-in-css-background-images
+@mixin createMaskStyle($path-to-svg, $icon-size) {
+  mask: url('~/../src/#{$path-to-svg}');
+  mask-repeat: no-repeat;
+  mask-size: $icon-size auto;
+  mask-position: center;
+  height: $icon-size;
+  width: $icon-size;
+}
+
 .download-icon {
   @include createIconStyle('/assets/baseline-get_app-24px.svg', 2rem)
+}
+
+.download-mask {
+  @include createMaskStyle('/assets/baseline-get_app-24px.svg', 2rem)
 }
