@@ -116,7 +116,7 @@ And even override the background style either using Sass inheritance or by addin
 
 ## Nested Grids vs. Designers
 <!-- wordy sentence below -->
-It's typical that when a designer creates the mockups for a page that not only do they adhere to an overall 12 column grid for the most general layout but that a good number of elements throughout the mockup align to the columns of that grid as well. This can be good because it cuts down on the extra work of creating custom widths for various elements, those elements can squeeze down in size in a consistent way with the rest of the grid, and maybe it's more visually appealing as well.
+When a designer creates mockups to a 12 column grid, not only is it used for the general layout, but it's also common to align more specific elements to these grid columns. This can be good because it cuts down on the extra work of creating custom widths for various elements, those elements can squeeze down in size in a consistent way with the rest of the grid, and maybe it's more visually appealing as well.
 
 The problem is that those pesky designers don't have a clue how you need to structure your page (nor should they!). You're building your page in boxes that nest into each other, not line by line, which leads us to the problem of nested grids.
 
