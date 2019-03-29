@@ -30,6 +30,31 @@
   }
 }
 
+@mixin existingIconAtTheEnd($extends-class, $icon-size) {
+  display: inline-flex;
+  align-items: center;
+  &:after {
+    @extend .#{$extends-class};
+    vertical-align: middle;
+    display: inline-block;
+    background-size: $icon-size auto;
+    height: $icon-size;
+    width: $icon-size;
+    content: '';
+  }
+}
+
+@mixin iconAtTheEndMask($path-to-svg, $icon-size) {
+  display: inline-flex;
+  align-items: center;
+  &:after {
+    @include createMaskStyle($path-to-svg, $icon-size);
+    vertical-align: middle;
+    display: inline-block;
+    content: '';
+  }
+}
+
 .download-icon {
   @include createIconStyle('/assets/baseline-get_app-24px.svg', 2rem)
 }
@@ -39,5 +64,10 @@
 }
 
 .download-cta {
-  @include iconAtTheEnd('/assets/baseline-get_app-24px.svg', 1.5rem);
+  @include existingIconAtTheEnd(download-icon, 1.5rem);
+  // @include iconAtTheEnd('/assets/baseline-get_app-24px.svg', 1.5rem);
+}
+
+.download-mask-cta {
+  @include iconAtTheEndMask('/assets/baseline-get_app-24px.svg', 1.5rem);
 }
