@@ -63,18 +63,39 @@ Then we can setup a specific css class for an icon using that mixin:
 }
 ```
 
-My example is using [webpack](https://webpack.js.org/) which is why it has the wierd '~/..' prepended to the icon path.
+*Note: My example is using [webpack](https://webpack.js.org/) which is why it has the wierd '~/..' prepended to the icon path.*
 
 Now we're free to add this style class to a download button:
 
 ```HTML
-<button class="download-mask"></button>
+<button class="download-icon"></button>
 ```
 
-#### Data URLs for Icons
-[Data URLs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) are a nice way to bundle your CSS and icons together into the same HTTP request, though there are some vague reasons why [this is bad](https://github.com/angular/angular-cli/issues/13355#issuecomment-451089973).
+<!-- Add image example of Button with download icon -->
 
+#### Data URLs for Icons
+[Data URLs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) are a nice way to bundle your CSS and icons together into the same HTTP request, though there are some good and some vague reasons why [this is bad](https://github.com/angular/angular-cli/issues/13355#issuecomment-451089973). If handled properly, this can be a good thing. Especially if you're not using HTTP/2. The main concern is to avoid duplicate data URLs.
+
+With Sass we can avoid this duplication pretty easily with inheritance. Let's say we want to make a `.download-icon-large` which is twice as big as the original, then we just inherit the original and override the properties. It's possible to make a mixin of this if it's a common enough occurence:
+
+```Sass
+@mixin overrideIconSize($extends-class, $icon-size) {
+  @extend .#{$extends-class};
+  background-size: $icon-size auto;
+  height: $icon-size;
+  width: $icon-size;
+}
+
+.download-icon-large {
+  @include overrideIconSize(download-icon, 3rem);
+}
+```
+
+<!-- Add image example of large icon -->
 
 ### SVG Icon as a Side Image
+A popular use for icons to put them beside some text for a link or a button to give a bit more of a hint to what will happen when it's clicked. Some examples might include a down arrow beside a menu item to hint that it will expand into a submenu. Or a download icon beside the link to a file to hint that it will download instead of open.
+
+These are situations where it's common for developers to add extra markup, usually in the form of an `<i>` tag or worse an `<img>` tag. Yuck! Let's keep it all in the CSS please! Remember icons are presentation only, no need for extra markup in our content. That's also [not the purpose of an `<i>` tag](https://www.w3schools.com/tags/tag_i.asp) and `<img>` tags download images regardless of visibility which is inefficient, and looks bad if the download fails.
 
 ### Coloring External SVG Icons

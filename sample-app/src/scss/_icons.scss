@@ -8,6 +8,13 @@
   width: $icon-size;
 }
 
+@mixin overrideIconSize($extends-class, $icon-size) {
+  @extend .#{$extends-class};
+  background-size: $icon-size auto;
+  height: $icon-size;
+  width: $icon-size;
+}
+
 // Using technique from https://codepen.io/noahblon/post/coloring-svgs-in-css-background-images
 @mixin createMaskStyle($path-to-svg, $icon-size) {
   mask: url('~/../src/#{$path-to-svg}');
@@ -18,19 +25,7 @@
   width: $icon-size;
 }
 
-@mixin iconAtTheEnd($path-to-svg, $icon-size) {
-  display: inline-flex;
-  align-items: center;
-
-  &:after {
-    @include createIconStyle($path-to-svg, $icon-size);
-    vertical-align: middle;
-    display: inline-block;
-    content: '';
-  }
-}
-
-@mixin existingIconAtTheEnd($extends-class, $icon-size) {
+@mixin existingIconAfter($extends-class, $icon-size) {
   display: inline-flex;
   align-items: center;
   &:after {
@@ -44,13 +39,16 @@
   }
 }
 
-@mixin iconAtTheEndMask($path-to-svg, $icon-size) {
+@mixin existingMaskAfter($extends-class, $icon-size) {
   display: inline-flex;
   align-items: center;
   &:after {
-    @include createMaskStyle($path-to-svg, $icon-size);
+    @extend .#{$extends-class};
     vertical-align: middle;
     display: inline-block;
+    background-size: $icon-size auto;
+    height: $icon-size;
+    width: $icon-size;
     content: '';
   }
 }
@@ -59,15 +57,19 @@
   @include createIconStyle('/assets/baseline-get_app-24px.svg', 2rem)
 }
 
+.download-icon-large {
+  @include overrideIconSize(download-icon, 3rem);
+}
+
 .download-mask {
   @include createMaskStyle('/assets/baseline-get_app-24px.svg', 2rem)
 }
 
-.download-cta {
-  @include existingIconAtTheEnd(download-icon, 1.5rem);
+.download-icon-cta {
+  @include existingIconAfter(download-icon, 1.5rem);
   // @include iconAtTheEnd('/assets/baseline-get_app-24px.svg', 1.5rem);
 }
 
 .download-mask-cta {
-  @include iconAtTheEndMask('/assets/baseline-get_app-24px.svg', 1.5rem);
+  @include existingMaskAfter(download-mask, 1.5rem);
 }

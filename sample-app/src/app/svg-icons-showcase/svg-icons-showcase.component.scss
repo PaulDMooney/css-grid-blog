@@ -3,7 +3,7 @@
   height: 2rem;
 }
 
-.download-mask {
+.download-mask::after {
   background-color: red;
 }
 
