@@ -25,20 +25,16 @@ With that brief comparison, it's up to you to decide but I'm going with SVG icon
 ## Inline SVGs vs External SVGs
 Inline SVGs, where the SVG definition is part of the [html document](https://css-tricks.com/using-svg/#article-header-id-7), vs External SVGs is the next choice to make.
 
-Mostly this choice comes down to your school of thought on iconography: Is iconography part of the style/theme of your web application, aimed to be fully controlled by CSS? Or is iconography a part of the web app's makeup, meaning your html has additional markup just to support icons?
+Mostly this choice comes down to your school of thought on iconography: Is iconography part of the style or theme of your web application, aimed to be fully controlled by CSS? Or is iconography a part of the web app's makeup, meaning your html has additional markup just to support icons?
 
-If your school of thought is the former, then congratulations you've made the right choice! Or at least you have from a purists point of view (you know, like those people who use to say using tables for layouts was bad. Even before we had real solutions like Flexbox or even Bootstrap to help us).
+If your school of thought is the former, then congratulations you've made the right choice! Or at least you have from a purists point of view, and definitely if you plan on treating the theme of your web application as a separated concern.
 
-Inline SVGs are still great in the sense that you get the flexibility to use CSS to select and color their elements. Or that they can be animated, but a lot of iconography on the web today is static and monochrome. If you don't need multicolored, animated icons then you don't need to pollute your HTML with extra inline SVG markup and blur the lines between theme and content structure.
+Inline SVGs are still great in the sense that you get the flexibility to use CSS to select and color their elements. Or that they can be animated, but a lot of iconography design on the web today is static and monochrome. If you don't need multicolored, animated icons then you don't need to pollute your HTML with extra inline SVG markup and blur the lines between theme and content structure.
 
 ## Working with External SVG Icons
 Generally the best way to work with SVG Icons is to load them in as background images. This way screen readers will avoid them and we don't need to add extra [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) attributes to say that they're presentation only.
 
-Why are icons presentation only you say? Well an icon itself doesn't have any meaning to a screenreader. It's either something that's meant to convey meaning of an operation to a sighted user without having to clog the screen with ugly text. So it's useful to have on a button for example, but that button should already have ARIA attributes to describe its meaning. The other purpose of an icon is just decoration, again there's no need have an extra element here we have to add ARIA attributes to.
-
-<!-- Something here about inlining and webpack? -->
-
-<!-- Something here about setting up a base class? -->
+Why are icons presentation only you say? Well an icon itself doesn't have any meaning to a screenreader. It's something that's meant to convey [extra] meaning to a sighted user in a shorthand way without having to consume precious screen realestate with text. So it's useful to have on a button for example, but that button should already have ARIA attributes to describe its meaning.
 
 ### SVG Icon as a Background Image
 
@@ -68,15 +64,15 @@ Then we can setup a specific css class for an icon using that mixin:
 Now we're free to add this style class to a download button:
 
 ```HTML
-<button class="download-icon"></button>
+<button class="download-icon" aria-label="Download the thing"></button>
 ```
 
 <!-- Add image example of Button with download icon -->
 
 #### Data URLs for Icons
-[Data URLs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) are a nice way to bundle your CSS and icons together into the same HTTP request, though there are some good and some vague reasons why [this is bad](https://github.com/angular/angular-cli/issues/13355#issuecomment-451089973). If handled properly, this can be a good thing. Especially if you're not using HTTP/2. The main concern is to avoid duplicate data URLs.
+[Data URLs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) are a nice way to bundle your CSS and icons together into the same HTTP request, though there are some good and some vague reasons why [this is bad](https://github.com/angular/angular-cli/issues/13355#issuecomment-451089973). If handled properly, this can still be a good thing. Especially if you're not using HTTP/2. The main concern is to avoid duplicate data URLs otherwise it can easily bloat your CSS assets fast.
 
-With Sass we can avoid this duplication pretty easily with inheritance. Let's say we want to make a `.download-icon-large` which is twice as big as the original, then we just inherit the original and override the properties. It's possible to make a mixin of this if it's a common enough occurence:
+With Sass we can avoid this duplication pretty easily with inheritance. Let's say we want to make a `.download-icon-large` which is twice as big as the original, then we just inherit the original and override its properties. It's possible to make a mixin of this if it's a common enough occurence:
 
 ```Sass
 @mixin overrideIconSize($extends-class, $icon-size) {
@@ -91,11 +87,71 @@ With Sass we can avoid this duplication pretty easily with inheritance. Let's sa
 }
 ```
 
+This will result in CSS which only includes that data URL once:
+
+```css
+.download-icon, .download-icon-large {
+  background-image: url('data:image/svg+xml;utf8,<svg ...> ... </svg>')
+}
+```
 <!-- Add image example of large icon -->
 
 ### SVG Icon as a Side Image
-A popular use for icons to put them beside some text for a link or a button to give a bit more of a hint to what will happen when it's clicked. Some examples might include a down arrow beside a menu item to hint that it will expand into a submenu. Or a download icon beside the link to a file to hint that it will download instead of open.
+A popular use for icons is to put them beside some text for a link or a button to give a bit more of a hint to what will happen when it's clicked. Some examples might include a down arrow beside a menu item to hint that it will expand into a submenu. Or a download icon beside the link to a file to hint that it will download instead of open.
 
-These are situations where it's common for developers to add extra markup, usually in the form of an `<i>` tag or worse an `<img>` tag. Yuck! Let's keep it all in the CSS please! Remember icons are presentation only, no need for extra markup in our content. That's also [not the purpose of an `<i>` tag](https://www.w3schools.com/tags/tag_i.asp) and `<img>` tags download images regardless of visibility which is inefficient, and looks bad if the download fails.
+These are situations where it's common for developers to add extra markup, usually in the form of an `<i>` tag or worse an `<img>` tag. Yuck! Let's keep it all in the CSS please! Remember icons are presentation only, no need for extra markup in our content. That's also [not the purpose of an `<i>` tag](https://www.w3schools.com/tags/tag_i.asp) and `<img>` tags download images regardless of visibility which is inefficient, and looks bad with its display of the browser's broken image icon if the download fails.
+
+So without adding extra markup, the solution is to use a pseudo element. Either [before](https://developer.mozilla.org/en-US/docs/Web/CSS/::before) or [after](https://developer.mozilla.org/en-US/docs/Web/CSS/::after) will do. Which you choose depends on the position of the icon (before for icon on the left, after for icon on the right) but it doesn't matter since position can be controlled in other ways.
+
+For this example, let's say we have a download link with the download icon to the right of it.
+<!-- Show image of proposed link -->
+
+Expanding on the `.download-icon` example above, let's create a Sass mixin to create a pseudo element that inherits from the `.download-icon`:
+
+```Sass
+@mixin existingIconAfter($extends-class, $icon-size) {
+  display: inline-flex;
+  align-items: center;
+  &:after {
+    @extend .#{$extends-class};
+    vertical-align: middle;
+    display: inline-block;
+    background-size: $icon-size auto;
+    height: $icon-size;
+    width: $icon-size;
+    content: '';
+  }
+}
+```
+
+We set the `display` property to `inline-flex` and `align-items` to `center` so that we can take advantage of [Flexbox](https://developer.mozilla.org/en-US/docs/Glossary/Flexbox) to vertically align the icon next to the text
+
+Next we create a new class using this mixin and the existing `.download-icon` class:
+
+```Sass
+.download-icon-after {
+  @include existingIconAfter(download-icon, 1.5rem);
+}
+```
+
+Then we can add setup our download link:
+```html
+<a href="..." class="download-icon-after">
+  <span>Download</span>
+</a>
+```
+
+What's with this `<span>` tag wrapping the 'Download' text? In this example it's for positioning. On some browsers Flexbox won't recognize text as an item to apply positioning and alignment to. Doesn't this go against "don't add extra markup for icons" approach we're trying to achieve? Maybe, but regardless we'd still want a way to apply styling rules to the separate elements that ultimately make up this link anyways so we can use that `span` to target the text portion of the link. For example, where horizontal space is limited, we may want to apply rules such that our text will wrap without wrapping the icon too. 
+
+If we had a separate theme in our webapp we'd be able to have different looks for this link such as flanking the text with icons on both sides, or removing the icons completely without having to change the structure of the html.
+
+<!-- Pic example with wrapped icon (looks bad) -->
+
+<!-- Pic example with wrapped text (looks good) -->
 
 ### Coloring External SVG Icons
+Applying color to External SVG Icons is unfortunately its weak point depending on your needs. If you don't need to support Internet Explorer, then there's a great solution [here](https://codepen.io/noahblon/post/coloring-svgs-in-css-background-images) using CSS [mask] (https://developer.mozilla.org/en-US/docs/Web/CSS/mask) which we'll follow. If this doesn't work for you, then one option might be to just create different color variants of the icon SVG files by opening them up and changing their `fill` color and saving them. 
+
+Back to the 
+
+<!-- Potential to use SVG Sprites? Look at the mask article -->
