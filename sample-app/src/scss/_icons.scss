@@ -46,7 +46,7 @@
     @extend .#{$extends-class};
     vertical-align: middle;
     display: inline-block;
-    background-size: $icon-size auto;
+    mask-size: $icon-size auto;
     height: $icon-size;
     width: $icon-size;
     content: '';
