@@ -155,3 +155,4 @@ Applying color to External SVG Icons is unfortunately its weak point depending o
 Back to the 
 
 <!-- Potential to use SVG Sprites? Look at the mask article -->
+<!-- Good sprites example -->
