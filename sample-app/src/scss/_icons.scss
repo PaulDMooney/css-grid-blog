@@ -70,9 +70,8 @@
 }
 
 .download-mask-sprite {
-  // @include createMaskStyle('/assets/sprites.svg#getapp', 2rem)
-  // @include createMaskStyle('/assets/baseline-get_app-24px.svg', 2rem)
-  @include createMaskStyle('https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/fragment-ready-1.svg#icon-clock-view', 2rem)
+  @include createMaskStyle('/assets/sprites.svg#getapp', 2rem)
+  // @include createMaskStyle('https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/fragment-ready-1.svg#icon-clock-view', 2rem)
 }
 
 .settings-mask-sprite {

@@ -1,8 +1,9 @@
-<svg width="0" height="0" class="hidden">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 32 96" enable-background="new 0 0 32 96" xml:space="preserve">
   <view id="getapp" viewBox="0 0 24 24"/>
-  <view id="settings" viewBox="0 0 20 20"/>
+  <view id="settings" viewBox="0 24 20 20"/>
 
-  <g xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="getapp">
+  <g xmlns="http://www.w3.org/2000/svg" id="getapp">
     <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"></path>
     <path d="M0 0h24v24H0z" fill="none"></path>
   </g>
