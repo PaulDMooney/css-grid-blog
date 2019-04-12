@@ -150,9 +150,75 @@ If we had a separate theme in our webapp we'd be able to have different looks fo
 <!-- Pic example with wrapped text (looks good) -->
 
 ### Coloring External SVG Icons
-Applying color to External SVG Icons is unfortunately its weak point depending on your needs. If you don't need to support Internet Explorer, then there's a great solution [here](https://codepen.io/noahblon/post/coloring-svgs-in-css-background-images) using CSS [mask] (https://developer.mozilla.org/en-US/docs/Web/CSS/mask) which we'll follow. If this doesn't work for you, then one option might be to just create different color variants of the icon SVG files by opening them up and changing their `fill` color and saving them. 
+Applying color to External SVG Icons is unfortunately its weak point depending on your needs. If you don't need to support Internet Explorer, then there's a great solution [here](https://codepen.io/noahblon/post/coloring-svgs-in-css-background-images) using CSS [mask] (https://developer.mozilla.org/en-US/docs/Web/CSS/mask) which we'll follow. If this doesn't work for you, then one option might be to just create different color variants of the icon SVG files by opening them up and changing their `fill` color and saving them, or some automated variant of this.
 
-Back to the 
+Back to the CSS mask option. The gist of it is that a mask decides the shape of an element, and the only visible parts of that element are inside that mask shape. So if we set an element's background color to blue, and apply a star shaped mask to it then we end up with a blue star. Unfortunately, because the rest of the element outside the star became invisible we lose the elements important details. This means we can't use an SVG mask as a direct replacement for a background image on say a button because the intended outline, background, hover, etc, whatever falls outside the mask shape is invisible. That's no good.
+
+We can solve this using pseudo elements. If we want a star shape icon on a button, we can apply the mask to a pseudo element within the button instead of on the button itself.
+
+Similar to how we have the `createIconStyle` mixin above, we can start out with a `createMaskStyle`
+
+```sass
+@mixin createMaskStyle($path-to-svg, $icon-size) {
+  mask: url('~/../src/#{$path-to-svg}');
+  mask-repeat: no-repeat;
+  mask-size: $icon-size auto;
+  mask-position: center;
+  height: $icon-size;
+  width: $icon-size;
+}
+```
+
+And create a css class leveraging that mixin
+```sass
+.download-mask {
+  @include createMaskStyle('/assets/baseline-get_app-24px.svg', 2rem)
+}
+```
+
+But, like we talked about, we usually don't want to apply a style like this directly to an element. We want to apply it to a pseudo element. Similar to our `createIconAfter` mixin we will create another mixin to leverage this style class:
+
+```sass
+@mixin existingMaskAfter($extends-class, $icon-size) {
+  display: inline-flex;
+  align-items: center;
+  &:after {
+    @extend .#{$extends-class};
+    vertical-align: middle;
+    display: inline-block;
+    mask-size: $icon-size auto;
+    height: $icon-size;
+    width: $icon-size;
+    content: '';
+  }
+}
+```
+
+Then we can leverage that mixin to create style classes we can apply to any element we want to have apply this pseudo element to (and maybe readjust its size if we want):
+
+```sass
+.download-mask-after {
+  @include existingMaskAfter(download-mask, 1.5rem);
+}
+```
+
+Now you can add an icon to a button like so:
+
+```html
+<button class="download-mask-after" aria-label="Download Button"></button>
+```
+
+But wait... I don't see an icon! That's because the pseudo element has nothing to show, so it looks invisible. If we give the pseudo element some color, the icon appears:
+
+```sass
+button.download-mask-after:after {
+  background-color: red;
+}
+```
+
+Now we're coloring SVG icons using CSS!
+
+### SVG Sprites
 
 <!-- Potential to use SVG Sprites? Look at the mask article -->
-<!-- Good sprites example -->
+<!-- Good sprites example: http://jsfiddle.net/simurai/7GCGr/ -->
