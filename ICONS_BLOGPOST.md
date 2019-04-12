@@ -149,7 +149,7 @@ If we had a separate theme in our webapp we'd be able to have different looks fo
 
 <!-- Pic example with wrapped text (looks good) -->
 
-### Coloring External SVG Icons
+### Coloring External SVG Icons using CSS Mask
 Applying color to External SVG Icons is unfortunately its weak point depending on your needs. If you don't need to support Internet Explorer, then there's a great solution [here](https://codepen.io/noahblon/post/coloring-svgs-in-css-background-images) using CSS [mask] (https://developer.mozilla.org/en-US/docs/Web/CSS/mask) which we'll follow. If this doesn't work for you, then one option might be to just create different color variants of the icon SVG files by opening them up and changing their `fill` color and saving them, or some automated variant of this.
 
 Back to the CSS mask option. The gist of it is that a mask decides the shape of an element, and the only visible parts of that element are inside that mask shape. So if we set an element's background color to blue, and apply a star shaped mask to it then we end up with a blue star. Unfortunately, because the rest of the element outside the star became invisible we lose the elements important details. This means we can't use an SVG mask as a direct replacement for a background image on say a button because the intended outline, background, hover, etc, whatever falls outside the mask shape is invisible. That's no good.
@@ -220,5 +220,53 @@ Now we're coloring SVG icons using CSS!
 
 ### SVG Sprites
 
-<!-- Potential to use SVG Sprites? Look at the mask article -->
-<!-- Good sprites example: http://jsfiddle.net/simurai/7GCGr/ -->
+In a section above we talked about using data URLs for icons as a way to minimize http requests, but that it has drawbacks such as needing to find ways to reduce data URL duplication. If you want to use the CSS Mask technique mentioned above to color your icons, and you have an autoprefixer, then chances are you're going get duplicate data URLs anyways since for every `mask` property with a data URL there will be at least a `-webkit-mask` property with the same data URL. An alternative that helps minimize http requests is to use SVG Sprites.
+
+SVG Sprites is just delivering all of your SVG icons in a single SVG file. Unlike traditional sprite files where you need to know the position of the image inside the file and do some magic to align background positioning over that image, with SVG sprites you can simply reference the image by it's identifier.
+
+For example, I've created a 'spites.svg' file and inside of it I have, amony other icons, my 'getapp' (download) icon which is identified by the name 'getapp' like so:
+
+```sass
+.download-mask-sprite {
+  @include createMaskStyle('/assets/sprites.svg#getapp', 2rem)
+}
+```
+
+There is some trickery around getting the sprites.svg structured to work for this purpose. Here's an example:
+```svg
+<svg id="icon" class="icon" version="1.1"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink">
+
+  <defs>
+    <style>
+    svg g {
+      display: none;
+    }
+    svg g:target {
+      display: inline;
+    }
+    </style>
+  </defs>
+
+  <!-- Here I've take pasted in the original SVG, and wrapped it's path elements in a g tag-->
+  <svg viewBox="0 0 24 24">
+    <g xmlns="http://www.w3.org/2000/svg" id="getapp">
+      <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"></path>
+      <path d="M0 0h24v24H0z" fill="none"></path>
+    </g>
+  </svg>
+
+  <!-- Another SVG in the same file -->
+  <svg viewBox="0 0 20 20">
+    <g xmlns="http://www.w3.org/2000/svg" id="settings">
+      <path fill="none" d="M0 0h20v20H0V0z"></path>
+      <path d="..."></path>
+    </g>
+  </svg>
+</svg>
+```
+
+You can read more about it in [this article](ttps://css-tricks.com/svg-fragment-identifiers-work/)
+
+From here it's up to you to decide how you want to incorporate this into your project. Do you manually build the sprite file? You can use a command line tool to build the sprite file for you like [svg-sprite](https://www.npmjs.com/package/svg-sprite). Or you can try to make it a part of your project's build.
