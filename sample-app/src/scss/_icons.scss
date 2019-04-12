@@ -57,12 +57,26 @@
   @include createIconStyle('/assets/baseline-get_app-24px.svg', 2rem)
 }
 
+.download-icon-sprite {
+  @include createMaskStyle('/assets/sprites.svg#getapp', 2rem)
+}
+
 .download-icon-large {
   @include overrideIconSize(download-icon, 3rem);
 }
 
 .download-mask {
   @include createMaskStyle('/assets/baseline-get_app-24px.svg', 2rem)
+}
+
+.download-mask-sprite {
+  // @include createMaskStyle('/assets/sprites.svg#getapp', 2rem)
+  // @include createMaskStyle('/assets/baseline-get_app-24px.svg', 2rem)
+  @include createMaskStyle('https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/fragment-ready-1.svg#icon-clock-view', 2rem)
+}
+
+.settings-mask-sprite {
+  @include createMaskStyle('/assets/sprites.svg#settings', 2rem)
 }
 
 .download-icon-cta {
@@ -72,4 +86,12 @@
 
 .download-mask-cta {
   @include existingMaskAfter(download-mask, 1.5rem);
+}
+
+.download-mask-sprite-cta {
+  @include existingMaskAfter(download-mask-sprite, 1.5rem);
+}
+
+.settings-mask-sprite-cta {
+  @include existingMaskAfter(settings-mask-sprite, 1.5rem);
 }
