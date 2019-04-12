@@ -269,4 +269,4 @@ There is some trickery around getting the sprites.svg structured to work for thi
 
 You can read more about it in [this article](ttps://css-tricks.com/svg-fragment-identifiers-work/)
 
-From here it's up to you to decide how you want to incorporate this into your project. Do you manually build the sprite file? You can use a command line tool to build the sprite file for you like [svg-sprite](https://www.npmjs.com/package/svg-sprite). Or you can try to make it a part of your project's build.
+From here it's up to you to decide how you want to incorporate this into your project. Do you build the sprite file yourself? Alternatively you can use a command line tool, like [svg-sprite](https://www.npmjs.com/package/svg-sprite), to build the sprite file for you. Another option is you can try to make it a part of your project's build.
