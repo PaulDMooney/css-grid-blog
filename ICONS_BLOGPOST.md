@@ -59,7 +59,7 @@ Then we can setup a specific css class for an icon using that mixin:
 }
 ```
 
-*Note: My example is using [webpack](https://webpack.js.org/) which is why it has the wierd '~/..' prepended to the icon path.*
+*Note: My example is using [webpack](https://webpack.js.org/) which is why it has the weird '~/..' prepended to the icon path.*
 
 Now we're free to add this style class to a download button:
 
@@ -220,7 +220,7 @@ Now we're coloring SVG icons using CSS!
 
 ### SVG Sprites
 
-In a section above we talked about using data URLs for icons as a way to minimize http requests, but that it has drawbacks such as needing to find ways to reduce data URL duplication. If you want to use the CSS Mask technique mentioned above to color your icons, and you have an autoprefixer, then chances are you're going get duplicate data URLs anyways since for every `mask` property with a data URL there will be at least a `-webkit-mask` property with the same data URL. An alternative that helps minimize http requests is to use SVG Sprites.
+In the Data URLs section above we talked about using data URLs for icons as a way to minimize http requests, but that it has drawbacks such as needing to find ways to reduce data URL duplication. If you want to use the CSS Mask technique mentioned above to color your icons, and you have an autoprefixer, then chances are you're going get duplicate data URLs anyways since for every `mask` property with a data URL there will be at least a `-webkit-mask` property with the same data URL. An alternative that helps minimize http requests is to use SVG Sprites.
 
 SVG Sprites is just delivering all of your SVG icons in a single SVG file. Unlike traditional sprite files where you need to know the position of the image inside the file and do some magic to align background positioning over that image, with SVG sprites you can simply reference the image by it's identifier.
 
@@ -267,6 +267,10 @@ There is some trickery around getting the sprites.svg structured to work for thi
 </svg>
 ```
 
-You can read more about it in [this article](ttps://css-tricks.com/svg-fragment-identifiers-work/)
+You can read more about it in [this article](https://css-tricks.com/svg-fragment-identifiers-work/)
 
 From here it's up to you to decide how you want to incorporate this into your project. Do you build the sprite file yourself? Alternatively you can use a command line tool, like [svg-sprite](https://www.npmjs.com/package/svg-sprite), to build the sprite file for you. Another option is you can try to make it a part of your project's build.
+
+### Wrap up
+
+There are a number of approaches to handling iconography in your web application, and a number of reasons to choose different approaches (fonts or SVGs, inlined or external, data URLs or sprites, etc.) and there's no necessarily wrong approaches. It all depends on your tastes, technical limitations and capabilities. The aim of this post is to guide you down a specific path of using SVG icons and reasons you might want to do it that way. I hope it was enlightening.
