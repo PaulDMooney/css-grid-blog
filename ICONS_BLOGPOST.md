@@ -40,7 +40,7 @@ Why are icons presentation only you say? Well an icon itself doesn't have any me
 
 For things like buttons that we're adding SVG icons to, we'll start by setting up a reusable mixin that takes as an argument the path to the icon, and the size of the icon (assuming square dimensions). This mixin will cover all of the properties we'll typically apply to every icon:
 
-```Sass
+```sass
 @mixin createIconStyle($path-to-svg, $icon-size) {
   background-image: url('~/../src/#{$path-to-svg}');
   background-repeat: no-repeat;
@@ -53,7 +53,7 @@ For things like buttons that we're adding SVG icons to, we'll start by setting u
 
 Then we can setup a specific css class for an icon using that mixin:
 
-```Sass
+```sass
 .download-icon {
   @include createIconStyle('/assets/baseline-get_app-24px.svg', 2rem)
 }
@@ -63,7 +63,7 @@ Then we can setup a specific css class for an icon using that mixin:
 
 Now we're free to add this style class to a download button:
 
-```HTML
+```html
 <button class="download-icon" aria-label="Download the thing"></button>
 ```
 
@@ -74,7 +74,7 @@ Now we're free to add this style class to a download button:
 
 With Sass we can avoid this duplication pretty easily with inheritance. Let's say we want to make a `.download-icon-large` which is twice as big as the original, then we just inherit the original and override its properties. It's possible to make a mixin of this if it's a common enough occurence:
 
-```Sass
+```sass
 @mixin overrideIconSize($extends-class, $icon-size) {
   @extend .#{$extends-class};
   background-size: $icon-size auto;
@@ -108,7 +108,7 @@ For this example, let's say we have a download link with the download icon to th
 
 Expanding on the `.download-icon` example above, let's create a Sass mixin to create a pseudo element that inherits from the `.download-icon`:
 
-```Sass
+```sass
 @mixin existingIconAfter($extends-class, $icon-size) {
   display: inline-flex;
   align-items: center;
@@ -128,7 +128,7 @@ We set the `display` property to `inline-flex` and `align-items` to `center` so 
 
 Next we create a new class using this mixin and the existing `.download-icon` class:
 
-```Sass
+```sass
 .download-icon-after {
   @include existingIconAfter(download-icon, 1.5rem);
 }
