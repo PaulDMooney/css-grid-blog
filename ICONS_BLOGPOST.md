@@ -234,33 +234,33 @@ For example, I've created a 'spites.svg' file and inside of it I have, among oth
 
 There is some trickery around getting the sprites.svg structured to work for this purpose. Here's an example:
 ```svg
-<svg id="icon" class="icon" version="1.1"
+<svg version="1.1"
   xmlns="http://www.w3.org/2000/svg"
   xmlns:xlink="http://www.w3.org/1999/xlink">
 
   <defs>
     <style>
-    svg g {
+    svg {
       display: none;
     }
-    svg g:target {
+    svg:target {
       display: inline;
     }
     </style>
   </defs>
 
   <!-- Here I've take pasted in the original SVG, and wrapped it's path elements in a g tag-->
-  <svg viewBox="0 0 24 24">
-    <g xmlns="http://www.w3.org/2000/svg" id="getapp">
-      <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"></path>
-      <path d="M0 0h24v24H0z" fill="none"></path>
+  <svg viewBox="0 0 24 24" id="getapp">
+    <g>
+      <path d="..."></path>
+      <path d="..." fill="none"></path>
     </g>
   </svg>
 
-  <!-- Another SVG in the same file -->
-  <svg viewBox="0 0 20 20">
-    <g xmlns="http://www.w3.org/2000/svg" id="settings">
-      <path fill="none" d="M0 0h20v20H0V0z"></path>
+  <!-- Another SVG in the same file referenced via #setttings URL fragment -->
+  <svg viewBox="0 0 20 20" id="settings">
+    <g>
+      <path fill="none" d="..."></path>
       <path d="..."></path>
     </g>
   </svg>
@@ -273,8 +273,65 @@ From here it's up to you to decide how you want to incorporate this into your pr
 
 #### Coloring SVG Sprites
 
-If the [CSS Mask](#coloring-external-svg-icons-using-css-mask) option is not for you then you can change the fill color of the icons inside the sprite file. We can gain an efficiency here where each icon (or rather its paths) is only defined once and then can be referenced multiple times taking advantage of SVG's `<use>` tag and applying different fill colors.
+If the [CSS Mask](#coloring-external-svg-icons-using-css-mask) option is not for you then you can change the fill color of the icons inside the sprite file. We can gain an efficiency here where each icon (or rather its paths) is only defined once and then can be referenced multiple times taking advantage of SVG's `<use>` tag and applying different fill colors.  
+
+First All of the icon definitions (the `<g>` tags) can be moved into the `<defs>` section of the SVG and given identifiers. Then all of the different color variants of each icon are created using `<svg>` tags with `<use>` tags inside them and something to distinguish their color in a CSS selector like a CSS class name. Finally we can use CSS inside the `<defs>` section to set the fill color on the icons matching that selector. 
+
+Here's an iteration on the previous example:
+```svg
+<svg version="1.1"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink">
+
+  <defs>
+    <style>
+    svg {
+      display: none;
+    }
+    svg:target {
+      display: inline;
+    }
+
+    <!-- Make SVGs with 'blue' classnames blue -->
+    svg.blue use {
+      fill: blue;
+    }
+
+    </style>
+
+    <!-- Icon definitions -->
+    <g id="getapp_icon">
+      <path d="..."></path>
+      <path d="..." fill="none"></path>
+    </g>
+
+    <g id="settings_icon">
+      <path fill="none" d="..."></path>
+      <path d="..."></path>
+    </g>
+
+  </defs>
+
+  <svg viewBox="0 0 24 24" id="getapp">
+    <use xlink:href="#getapp_icon"/>
+  </svg>
+
+  <svg viewBox="0 0 20 20" id="settings">
+    <use xlink:href="#settings_icon"/>
+  </svg>
+
+  <!-- Referenced via #getapp_blue. Will display a blue version of the #getapp icon -->
+  <svg viewBox="0 0 24 24" class="blue" id="getapp_blue">
+    <use xlink:href="#getapp_icon"/>
+  </svg>
+
+  <svg viewBox="0 0 20 20" class="blue" id="settings_blue">
+    <use xlink:href="#settings_icon"/>
+  </svg>
+
+</svg>
+```
 
 ### Wrap up
 
-There are a number of approaches to handling iconography in your web application, and a number of reasons to choose different approaches (fonts or SVGs, inlined or external, data URLs or sprites, etc.) and there's no necessarily wrong approaches. It all depends on your tastes, technical limitations and capabilities. The aim of this post is to guide you down a specific path of using SVG icons and reasons you might want to do it that way. I hope it was enlightening.
+There are a number of approaches to handling iconography in your web application, and even more reasons to choose different approaches (fonts or SVGs, inlined or external, data URLs or sprites, etc.). It all depends on your tastes, technical limitations and capabilities. The aim of this post is to guide you down a specific path of using SVG icons and reasons you might want to do it that way. 
