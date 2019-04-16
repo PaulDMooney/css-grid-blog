@@ -220,11 +220,11 @@ Now we're coloring SVG icons using CSS!
 
 ### SVG Sprites
 
-In the Data URLs section above we talked about using data URLs for icons as a way to minimize http requests, but that it has drawbacks such as needing to find ways to reduce data URL duplication. If you want to use the CSS Mask technique mentioned above to color your icons, and you have an autoprefixer, then chances are you're going get duplicate data URLs anyways since for every `mask` property with a data URL there will be at least a `-webkit-mask` property with the same data URL. An alternative that helps minimize http requests is to use SVG Sprites.
+In the [Data URLs](#data-urls-for-icons) section above we talked about using data URLs as a way to minimize http requests, but that it has drawbacks such as needing to find ways to reduce data URL duplication. If you want to use the CSS Mask technique mentioned above to color your icons, and you have an autoprefixer, then chances are you're going get duplicate data URLs anyways since for every `mask` property with a data URL there will be at least a `-webkit-mask` property with the same data URL. An alternative that also helps minimize http requests is to use SVG Sprites.
 
-SVG Sprites is just delivering all of your SVG icons in a single SVG file. Unlike traditional sprite files where you need to know the position of the image inside the file and do some magic to align background positioning over that image, with SVG sprites you can simply reference the image by it's identifier.
+SVG Sprites is just delivering all of your SVG icons in a single SVG file. Unlike traditional sprite files where you need to know the position of the image inside the file and do some magic to align background positioning over that image, with SVG sprites you can simply reference the image through the URL by it's identifier.
 
-For example, I've created a 'spites.svg' file and inside of it I have, amony other icons, my 'getapp' (download) icon which is identified by the name 'getapp' like so:
+For example, I've created a 'spites.svg' file and inside of it I have, among other icons, my 'getapp' (download) icon which is identified by the name 'getapp' and referenced as a URL fragment like so:
 
 ```sass
 .download-mask-sprite {
@@ -270,6 +270,10 @@ There is some trickery around getting the sprites.svg structured to work for thi
 You can read more about it in [this article](https://css-tricks.com/svg-fragment-identifiers-work/)
 
 From here it's up to you to decide how you want to incorporate this into your project. Do you build the sprite file yourself? Alternatively you can use a command line tool, like [svg-sprite](https://www.npmjs.com/package/svg-sprite), to build the sprite file for you. Another option is you can try to make it a part of your project's build.
+
+#### Coloring SVG Sprites
+
+If the [CSS Mask](#coloring-external-svg-icons-using-css-mask) option is not for you then you can change the fill color of the icons inside the sprite file. We can gain an efficiency here where each icon (or rather its paths) is only defined once and then can be referenced multiple times taking advantage of SVG's `<use>` tag and applying different fill colors.
 
 ### Wrap up
 
