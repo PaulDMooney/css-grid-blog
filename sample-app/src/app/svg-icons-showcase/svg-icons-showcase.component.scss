@@ -1,0 +1,16 @@
+.download-icon, .download-mask {
+  width: 2rem;
+  height: 2rem;
+}
+
+.download-mask::after {
+  background-color: red;
+}
+
+.download-mask-cta::after {
+  background-color: rebeccapurple;
+}
+
+.download-mask-sprite-cta::after, .settings-mask-sprite-cta::after {
+  background-color: crimson;
+}

@@ -1,0 +1,96 @@
+
+@mixin createIconStyle($path-to-svg, $icon-size) {
+  background-image: url('~/../src/#{$path-to-svg}');
+  background-repeat: no-repeat;
+  background-size: $icon-size auto;
+  background-position: center;
+  height: $icon-size;
+  width: $icon-size;
+}
+
+@mixin overrideIconSize($extends-class, $icon-size) {
+  @extend .#{$extends-class};
+  background-size: $icon-size auto;
+  height: $icon-size;
+  width: $icon-size;
+}
+
+// Using technique from https://codepen.io/noahblon/post/coloring-svgs-in-css-background-images
+@mixin createMaskStyle($path-to-svg, $icon-size) {
+  mask: url('~/../src/#{$path-to-svg}');
+  mask-repeat: no-repeat;
+  mask-size: $icon-size auto;
+  mask-position: center;
+  height: $icon-size;
+  width: $icon-size;
+}
+
+@mixin existingIconAfter($extends-class, $icon-size) {
+  display: inline-flex;
+  align-items: center;
+  &:after {
+    @extend .#{$extends-class};
+    vertical-align: middle;
+    display: inline-block;
+    background-size: $icon-size auto;
+    height: $icon-size;
+    width: $icon-size;
+    content: '';
+  }
+}
+
+@mixin existingMaskAfter($extends-class, $icon-size) {
+  display: inline-flex;
+  align-items: center;
+  &:after {
+    @extend .#{$extends-class};
+    vertical-align: middle;
+    display: inline-block;
+    mask-size: $icon-size auto;
+    height: $icon-size;
+    width: $icon-size;
+    content: '';
+  }
+}
+
+.download-icon {
+  @include createIconStyle('/assets/baseline-get_app-24px.svg', 2rem)
+}
+
+.download-icon-sprite {
+  @include createMaskStyle('/assets/sprites.svg#getapp', 2rem)
+}
+
+.download-icon-large {
+  @include overrideIconSize(download-icon, 3rem);
+}
+
+.download-mask {
+  @include createMaskStyle('/assets/baseline-get_app-24px.svg', 2rem)
+}
+
+.download-mask-sprite {
+  @include createMaskStyle('/assets/sprites.svg#getapp', 2rem)
+  // @include createMaskStyle('https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/fragment-ready-1.svg#icon-clock-view', 2rem)
+}
+
+.settings-mask-sprite {
+  @include createMaskStyle('/assets/sprites.svg#settings', 2rem)
+}
+
+.download-icon-cta {
+  @include existingIconAfter(download-icon, 1.5rem);
+  // @include iconAtTheEnd('/assets/baseline-get_app-24px.svg', 1.5rem);
+}
+
+.download-mask-cta {
+  @include existingMaskAfter(download-mask, 1.5rem);
+}
+
+.download-mask-sprite-cta {
+  @include existingMaskAfter(download-mask-sprite, 1.5rem);
+}
+
+.settings-mask-sprite-cta {
+  @include existingMaskAfter(settings-mask-sprite, 1.5rem);
+}
