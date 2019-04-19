@@ -1,13 +1,13 @@
 # Tips for your Site's Iconography
 
-## Choosing your Iconongraphy Approach
+## Choosing your Iconography Approach
 
-At the beginning of every web app's development there is the question of iconography. Which icon library do we use? There's lots to choose from: [Font Awesome](https://fontawesome.com/), [Fort Awesome](https://fortawesome.com/), [The Noun Project](https://thenounproject.com/), [Material Desion Icons](https://material.io/tools/icons/), [IcoMoon](https://icomoon.io/). Generally this choice is up to the designer (if you have one), but as a developer your choice is going to be between using SVG's as icons or Icon fonts. There are a number of pros and cons to SVGs vs Icon fonts that you can find better articles on such as [this one](https://css-tricks.com/icon-fonts-vs-svg/). Here's my quick comparison:
+At the beginning of every web app's development there is the question of iconography. Which icon library do we use? There's lots to choose from: [Font Awesome](https://fontawesome.com/), [Fort Awesome](https://fortawesome.com/), [The Noun Project](https://thenounproject.com/), [Material Design Icons](https://material.io/tools/icons/), [IcoMoon](https://icomoon.io/). Generally this choice is up to the designer (if you have one), but as a developer your choice is going to be between using SVG's as icons or Icon fonts. There are a number of pros and cons to SVGs vs Icon fonts that you can find better articles on such as [this one](https://css-tricks.com/icon-fonts-vs-svg/). Here's my quick comparison:
 
 SVG Pros:
 - SVGs are generally sharper than fonts.
 - You are able to specifically pick out and download only the SVGs you want. 
-- Aligning SVGs is simpler and more predictable because they aren't susceptible to wierd font rules such as line height which can add unwanted white space.
+- Aligning SVGs is simpler and more predictable because they aren't susceptible to weird font rules such as line height which can add unwanted white space.
 
 SVG Cons:
 - Coloring external SVGs can't be done in CSS in a way that's supported in all browsers.
@@ -34,7 +34,7 @@ Inline SVGs are still great in the sense that you get the flexibility to use CSS
 ## Working with External SVG Icons
 Generally the best way to work with SVG Icons is to load them in as background images. This way screen readers will avoid them and we don't need to add extra [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) attributes to say that they're presentation only.
 
-Why are icons presentation only you say? Well an icon itself doesn't have any meaning to a screenreader. It's something that's meant to convey [extra] meaning to a sighted user in a shorthand way without having to consume precious screen realestate with text. So it's useful to have on a button for example, but that button should already have ARIA attributes to describe its meaning.
+Why are icons presentation only you say? Well an icon itself doesn't have any meaning to a screenreader. It's something that's meant to convey [extra] meaning to a sighted user in a shorthand way without having to consume precious screen real estate with text. So it's useful to have on a button for example, but that button should already have ARIA attributes to describe its meaning.
 
 ### SVG Icon as a Background Image
 
@@ -75,7 +75,7 @@ Now we're free to add this style class to a download button:
 #### Data URLs for Icons
 [Data URLs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) are a nice way to bundle your CSS and icons together into the same HTTP request, though there are some good and some vague reasons why [this is bad](https://github.com/angular/angular-cli/issues/13355#issuecomment-451089973). If handled properly, this can still be a good thing. Especially if you're not using HTTP/2. The main concern is to avoid duplicate data URLs otherwise it can easily bloat your CSS assets fast.
 
-With Sass we can avoid this duplication pretty easily with inheritance. Let's say we want to make a `.download-icon-large` which is twice as big as the original, then we just inherit the original and override its properties. It's possible to make a mixin of this if it's a common enough occurence:
+With Sass we can avoid this duplication pretty easily with inheritance. Let's say we want to make a `.download-icon-large` which is twice as big as the original, then we just inherit the original and override its properties. It's possible to make a mixin of this if it's a common enough occurrence:
 
 ```sass
 @mixin overrideIconSize($extends-class, $icon-size) {
@@ -225,7 +225,7 @@ Now we're coloring SVG icons using CSS!
 
 In the [Data URLs](#data-urls-for-icons) section above we talked about using data URLs as a way to minimize http requests, but that it has drawbacks such as needing to find ways to reduce data URL duplication. If you want to use the CSS Mask technique mentioned above to color your icons, and you have an autoprefixer, then chances are you're going get duplicate data URLs anyways since for every `mask` property with a data URL there will be at least a `-webkit-mask` property with the same data URL. An alternative that also helps minimize http requests is to use SVG Sprites.
 
-SVG Sprites is just delivering all of your SVG icons in a single SVG file. Unlike traditional sprite files where you need to know the position of the image inside the file and do some magic to align background positioning over that image, with SVG sprites you can simply reference the image through the URL by it's identifier.
+SVG Sprites is just delivering all of your SVG icons in a single SVG file. Unlike traditional sprite files where you need to know the position of the image inside the file and do some magic to align background positioning over that image, with SVG sprites you can simply reference the image through the URL by its identifier.
 
 For example, I've created a 'spites.svg' file and inside of it I have, among other icons, my 'getapp' (download) icon which is identified by the name 'getapp' and referenced as a URL fragment like so:
 
