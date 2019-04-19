@@ -57,6 +57,10 @@
   @include createIconStyle('/assets/baseline-get_app-24px.svg', 2rem)
 }
 
+.download-icon-white {
+  @include createIconStyle('/assets/baseline-get_app-24px.white.svg', 2rem)
+}
+
 .download-icon-sprite {
   @include createMaskStyle('/assets/sprites.svg#getapp', 2rem)
 }
@@ -88,7 +92,7 @@
 }
 
 .download-mask-sprite-cta {
-  @include existingMaskAfter(download-mask-sprite, 1.5rem);
+  @include existingMaskAfter(download-mask-sprite, 2rem);
 }
 
 .settings-mask-sprite-cta {

@@ -54,8 +54,8 @@ For things like buttons that we're adding SVG icons to, we'll start by setting u
 Then we can setup a specific css class for an icon using that mixin:
 
 ```sass
-.download-icon {
-  @include createIconStyle('/assets/baseline-get_app-24px.svg', 2rem)
+.download-icon-white {
+  @include createIconStyle('/assets/baseline-get_app-24px.white.svg', 2rem)
 }
 ```
 
@@ -64,10 +64,13 @@ Then we can setup a specific css class for an icon using that mixin:
 Now we're free to add this style class to a download button:
 
 ```html
-<button class="download-icon" aria-label="Download the thing"></button>
+<button class="btn btn-primary download-icon-white" aria-label="Download the thing"></button>
 ```
 
-<!-- Add image example of Button with download icon -->
+<!-- Image example of Button with download icon -->
+![Download Button White](./figures/button_white_download.png)
+
+*The download button with an icon*
 
 #### Data URLs for Icons
 [Data URLs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) are a nice way to bundle your CSS and icons together into the same HTTP request, though there are some good and some vague reasons why [this is bad](https://github.com/angular/angular-cli/issues/13355#issuecomment-451089973). If handled properly, this can still be a good thing. Especially if you're not using HTTP/2. The main concern is to avoid duplicate data URLs otherwise it can easily bloat your CSS assets fast.
@@ -94,7 +97,6 @@ This will result in CSS which only includes that data URL once:
   background-image: url('data:image/svg+xml;utf8,<svg ...> ... </svg>')
 }
 ```
-<!-- Add image example of large icon -->
 
 ### SVG Icon as a Side Image
 A popular use for icons is to put them beside some text for a link or a button to give a bit more of a hint to what will happen when it's clicked. Some examples might include a down arrow beside a menu item to hint that it will expand into a submenu. Or a download icon beside the link to a file to hint that it will download instead of open.
@@ -105,6 +107,7 @@ So without adding extra markup, the solution is to use a pseudo element. Either 
 
 For this example, let's say we have a download link with the download icon to the right of it.
 <!-- Show image of proposed link -->
+![Download link](./figures/link_with_icon.png)
 
 Expanding on the `.download-icon` example above, let's create a Sass mixin to create a pseudo element that inherits from the `.download-icon`:
 
@@ -144,10 +147,6 @@ Then we can add setup our download link:
 What's with this `<span>` tag wrapping the 'Download' text? In this example it's for positioning. On some browsers Flexbox won't recognize text as an item to apply positioning and alignment to. Doesn't this go against "don't add extra markup for icons" approach we're trying to achieve? Maybe, but regardless we'd still want a way to apply styling rules to the separate elements that ultimately make up this link anyways so we can use that `span` to target the text portion of the link. For example, where horizontal space is limited, we may want to apply rules such that our text will wrap without wrapping the icon too. 
 
 If we had a separate theme in our webapp we'd be able to have different looks for this link such as flanking the text with icons on both sides, or removing the icons completely without having to change the structure of the html.
-
-<!-- Pic example with wrapped icon (looks bad) -->
-
-<!-- Pic example with wrapped text (looks good) -->
 
 ### Coloring External SVG Icons using CSS Mask
 Applying color to External SVG Icons is unfortunately its weak point depending on your needs. If you don't need to support Internet Explorer, then there's a great solution [here](https://codepen.io/noahblon/post/coloring-svgs-in-css-background-images) using CSS [mask] (https://developer.mozilla.org/en-US/docs/Web/CSS/mask) which we'll follow. If this doesn't work for you, then one option might be to just create different color variants of the icon SVG files by opening them up and changing their `fill` color and saving them, or some automated variant of this.
@@ -218,6 +217,10 @@ button.download-mask-after:after {
 
 Now we're coloring SVG icons using CSS!
 
+![Red Download Button](./figures/button_red_download.png)
+
+*Hurray we have a red download icon to make our eyes sore!*
+
 ### SVG Sprites
 
 In the [Data URLs](#data-urls-for-icons) section above we talked about using data URLs as a way to minimize http requests, but that it has drawbacks such as needing to find ways to reduce data URL duplication. If you want to use the CSS Mask technique mentioned above to color your icons, and you have an autoprefixer, then chances are you're going get duplicate data URLs anyways since for every `mask` property with a data URL there will be at least a `-webkit-mask` property with the same data URL. An alternative that also helps minimize http requests is to use SVG Sprites.
@@ -236,10 +239,13 @@ There is some trickery around getting the sprites.svg structured to work for thi
 ```svg
 <svg version="1.1"
   xmlns="http://www.w3.org/2000/svg"
-  xmlns:xlink="http://www.w3.org/1999/xlink">
+  xmlns:xlink="http://www.w3.org/1999/xlink" class="sprites">
 
   <defs>
     <style>
+    svg.sprites {
+      display: inline;
+    }
     svg {
       display: none;
     }
@@ -249,7 +255,7 @@ There is some trickery around getting the sprites.svg structured to work for thi
     </style>
   </defs>
 
-  <!-- Here I've take pasted in the original SVG, and wrapped it's path elements in a g tag-->
+  <!-- Here I've pasted in the original SVG, and wrapped it's path elements in a g tag-->
   <svg viewBox="0 0 24 24" id="getapp">
     <g>
       <path d="..."></path>
@@ -281,10 +287,14 @@ Here's an iteration on the previous example:
 ```svg
 <svg version="1.1"
   xmlns="http://www.w3.org/2000/svg"
-  xmlns:xlink="http://www.w3.org/1999/xlink">
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  class="sprites">
 
   <defs>
     <style>
+    svg.sprites {
+      display: inline;
+    }
     svg {
       display: none;
     }
@@ -334,4 +344,4 @@ Here's an iteration on the previous example:
 
 ### Wrap up
 
-There are a number of approaches to handling iconography in your web application, and even more reasons to choose different approaches (fonts or SVGs, inlined or external, data URLs or sprites, etc.). It all depends on your tastes, technical limitations and capabilities. The aim of this post is to guide you down a specific path of using SVG icons and reasons you might want to do it that way. 
+There are a number of approaches to handling iconography in your web application, and even more reasons to choose different approaches (fonts or SVGs, inlined or external, data URLs or sprites, etc.). It all depends on your tastes, technical limitations and capabilities. The aim of this post is to guide you down a specific path of using SVG icons and reasons you might want to do it that way.
