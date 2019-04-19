@@ -54,8 +54,8 @@ For things like buttons that we're adding SVG icons to, we'll start by setting u
 Then we can setup a specific css class for an icon using that mixin:
 
 ```sass
-.download-icon-white {
-  @include createIconStyle('/assets/baseline-get_app-24px.white.svg', 2rem)
+.download-icon {
+  @include createIconStyle('/assets/baseline-get_app-24px.svg', 2rem)
 }
 ```
 
@@ -64,16 +64,16 @@ Then we can setup a specific css class for an icon using that mixin:
 Now we're free to add this style class to a download button:
 
 ```html
-<button class="btn btn-primary download-icon-white" aria-label="Download the thing"></button>
+<button class="btn btn-primary download-icon" aria-label="Download the thing"></button>
 ```
 
 <!-- Image example of Button with download icon -->
 ![Download Button White](./figures/button_white_download.png)
 
-*The download button with an icon*
+*The download button with an icon. Note: I changed my icon to white for this example because the default black on blue looked bad.*
 
 #### Data URLs for Icons
-[Data URLs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) are a nice way to bundle your CSS and icons together into the same HTTP request, though there are some good and some vague reasons why [this is bad](https://github.com/angular/angular-cli/issues/13355#issuecomment-451089973). If handled properly, this can still be a good thing. Especially if you're not using HTTP/2. The main concern is to avoid duplicate data URLs otherwise it can easily bloat your CSS assets fast.
+[Data URLs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) are a nice way to bundle your CSS and icons together into the same HTTP request, though there are some good and some vague reasons why [this is bad](https://github.com/angular/angular-cli/issues/13355#issuecomment-451089973). If handled properly, this can still be a good thing. Especially if you're not using HTTP/2 yet. The main concern is to avoid duplicate data URLs otherwise it can easily bloat your CSS assets fast.
 
 With Sass we can avoid this duplication pretty easily with inheritance. Let's say we want to make a `.download-icon-large` which is twice as big as the original, then we just inherit the original and override its properties. It's possible to make a mixin of this if it's a common enough occurrence:
 
@@ -105,7 +105,7 @@ These are situations where it's common for developers to add extra markup, usual
 
 So without adding extra markup, the solution is to use a pseudo element. Either [before](https://developer.mozilla.org/en-US/docs/Web/CSS/::before) or [after](https://developer.mozilla.org/en-US/docs/Web/CSS/::after) will do. Which you choose depends on the position of the icon (before for icon on the left, after for icon on the right) but it doesn't matter since position can be controlled in other ways.
 
-For this example, let's say we have a download link with the download icon to the right of it.
+For this example, let's say we have a download link with the download icon to the right of it like this:
 <!-- Show image of proposed link -->
 ![Download link](./figures/link_with_icon.png)
 
